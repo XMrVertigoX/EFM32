@@ -1,6 +1,6 @@
 # ----- Configuration ----------------------------------------------------------
 
-include config.mk
+include ../config.mk
 
 SRCDIR = src
 
@@ -33,4 +33,4 @@ LDFLAGS += --specs=nosys.specs
 
 # ----- Rules ------------------------------------------------------------------
 
-include rules.mk
+include ../rules.mk
