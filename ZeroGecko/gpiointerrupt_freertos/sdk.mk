@@ -14,13 +14,13 @@ LINKERSCRIPT = $(SDK)/Device/SiliconLabs/EFM32ZG/Source/GCC/efm32zg.ld
 
 # ----- emdrv ------------------------------------------------------------------
 
-# INCLUDES += $(SDK)/emdrv/common/inc
+INCLUDES += $(SDK)/emdrv/common/inc
 
 # INCLUDES += $(SDK)/emdrv/dmadrv/inc
 # SOURCES += $(wildcard $(SDK)/emdrv/dmadrv/src/*.c)
 
 INCLUDES += $(SDK)/emdrv/gpiointerrupt/inc
-SOURCES += $(SDK)/emdrv/gpiointerrupt/src/gpiointerrupt.c
+SOURCES += $(wildcard $(SDK)/emdrv/gpiointerrupt/src/*.c)
 
 # INCLUDES += $(SDK)/emdrv/nvm/inc
 # SOURCES += $(wildcard $(SDK)/emdrv/nvm/src/*.c)

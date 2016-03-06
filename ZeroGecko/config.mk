@@ -12,9 +12,4 @@ SIZE    = $(TOOLCHAIN_PREFIX)size
 # ----- Tools ------------------------------------------------------------------
 
 MKDIR = mkdir -p
-RMDIR = rm -rf
-
-# ----- Directories and Files --------------------------------------------------
-
-OBJDIR = _obj
-OUTDIR = _out
+RM    = rm -rf

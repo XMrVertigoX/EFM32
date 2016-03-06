@@ -1,4 +1,7 @@
-# ----- Files ------------------------------------------------------------------
+# ----- Directories and Files --------------------------------------------------
+
+OBJDIR = _obj
+OUTDIR = _out
 
 BINARY     = $(OUTDIR)/$(NAME).bin
 EXECUTABLE = $(OUTDIR)/$(NAME).elf
@@ -34,8 +37,7 @@ OBJECTS = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(basename $(notdir $(SOURCES)
 all: $(BINARY)
 
 clean:
-	$(RMDIR) $(OUTDIR)
-	$(RMDIR) $(OBJDIR)
+	$(RM) $(OUTDIR) $(OBJDIR)
 
 download: $(EXECUTABLE)
 	$(GDB) -x download.gdb $<
@@ -45,34 +47,31 @@ size: $(EXECUTABLE)
 
 # ----- Output Files -----------------------------------------------------------
 
-$(BINARY): $(EXECUTABLE)
-	$(MKDIR) $(dir $@)
+$(BINARY): $(EXECUTABLE) | $(OUTDIR)
 	$(OBJCOPY) -O binary $< $@
 	echo $@
 
-$(EXECUTABLE): $(OBJECTS)
-	$(MKDIR) $(dir $@)
+$(EXECUTABLE): $(OBJECTS) | $(OUTDIR)
 	$(GCC) $(GCCFLAGS) $(LDFLAGS) $^ $(LIBFLAGS) -o $@
 	echo $@
+	
+$(OBJDIR) $(OUTDIR):
+	$(MKDIR) $@
 
 # ----- Pattern rules ----------------------------------------------------------
 
-$(OBJDIR)/%.o: %.c
-	$(MKDIR) $(dir $@)
+$(OBJDIR)/%.o: %.c | $(OBJDIR)
 	$(GCC) $(GCCFLAGS) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 	echo $@
 
-$(OBJDIR)/%.o: %.cpp
-	$(MKDIR) $(dir $@)
+$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
 	$(GCC) $(GCCFLAGS) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
 	echo $@
 
-$(OBJDIR)/%.o: %.s
-	$(MKDIR) $(dir $@)
+$(OBJDIR)/%.o: %.s | $(OBJDIR)
 	$(GCC) $(GCCFLAGS) $(ASLAGS) -c -o $@ $<
 	echo $@
 
-$(OBJDIR)/%.o: %.S
-	$(MKDIR) $(dir $@)
+$(OBJDIR)/%.o: %.S | $(OBJDIR)
 	$(GCC) $(GCCFLAGS) $(ASLAGS) -x assembler-with-cpp $(CPPFLAGS) -c -o $@ $<
 	echo $@
