@@ -70,7 +70,7 @@ LIBFLAGS = $(addprefix -l, $(LIBRARIES))
 
 OBJECTS = $(addprefix $(OBJDIR)/,$(addsuffix .o,$(basename $(SOURCES))))
 
-# ----- Implicit rules ------------------------------------------------------------
+# ----- Rules ------------------------------------------------------------------
 
 .PHONY: all clean download size
 
@@ -81,16 +81,14 @@ OBJECTS = $(addprefix $(OBJDIR)/,$(addsuffix .o,$(basename $(SOURCES))))
 all: $(EXECUTABLE)
 
 clean:
-	$(RMDIR) $(OUTDIR) $(OBJDIR)
+	$(RMDIR) $(OBJDIR)
+	$(RMDIR) $(OUTDIR)
 
 download: $(EXECUTABLE)
 	$(GDB) -x download.gdb $<
 
 size: $(EXECUTABLE)
 	$(SIZE) $^
-
-$(OBJDIR) $(OUTDIR):
-	$(MKDIR) $@
 
 $(EXECUTABLE): $(OBJECTS)
 	$(MKDIR) $(dir $@)

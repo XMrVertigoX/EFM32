@@ -1,52 +1,50 @@
-SDK = ../sdk
-
 # ----- CMSIS ------------------------------------------------------------------
 
-INCLUDES += $(SDK)/cmsis/Include
-LIB_DIRS += $(SDK)/cmsis/Lib/GCC
+INCLUDES += sdk/cmsis/Include
+LIB_DIRS += sdk/cmsis/Lib/GCC
 
 # ----- Device -----------------------------------------------------------------
 
-INCLUDES += $(SDK)/Device/SiliconLabs/EFM32ZG/Include
-SOURCES += $(SDK)/Device/SiliconLabs/EFM32ZG/Source/GCC/startup_efm32zg.c
-SOURCES += $(SDK)/Device/SiliconLabs/EFM32ZG/Source/system_efm32zg.c
-LINKERSCRIPT = $(SDK)/Device/SiliconLabs/EFM32ZG/Source/GCC/efm32zg.ld
+INCLUDES += sdk/Device/SiliconLabs/EFM32ZG/Include
+SOURCES += sdk/Device/SiliconLabs/EFM32ZG/Source/GCC/startup_efm32zg.c
+SOURCES += sdk/Device/SiliconLabs/EFM32ZG/Source/system_efm32zg.c
+LINKERSCRIPT = sdk/Device/SiliconLabs/EFM32ZG/Source/GCC/efm32zg.ld
 
 # ----- emdrv ------------------------------------------------------------------
 
-INCLUDES += $(SDK)/emdrv/common/inc
+INCLUDES += sdk/emdrv/common/inc
 
-# INCLUDES += $(SDK)/emdrv/dmadrv/inc
-# SOURCES += $(wildcard $(SDK)/emdrv/dmadrv/src/*.c)
+# INCLUDES += sdk/emdrv/dmadrv/inc
+# SOURCES += $(wildcard sdk/emdrv/dmadrv/src/*.c)
 
-INCLUDES += $(SDK)/emdrv/gpiointerrupt/inc
-SOURCES += $(wildcard $(SDK)/emdrv/gpiointerrupt/src/*.c)
+INCLUDES += sdk/emdrv/gpiointerrupt/inc
+SOURCES += $(wildcard sdk/emdrv/gpiointerrupt/src/*.c)
 
-# INCLUDES += $(SDK)/emdrv/nvm/inc
-# SOURCES += $(wildcard $(SDK)/emdrv/nvm/src/*.c)
+# INCLUDES += sdk/emdrv/nvm/inc
+# SOURCES += $(wildcard sdk/emdrv/nvm/src/*.c)
 
-# INCLUDES += $(SDK)/emdrv/rtcdrv/inc
-# SOURCES += $(wildcard $(SDK)/emdrv/rtcdrv/src/*.c)
+# INCLUDES += sdk/emdrv/rtcdrv/inc
+# SOURCES += $(wildcard sdk/emdrv/rtcdrv/src/*.c)
 
-# INCLUDES += $(SDK)/emdrv/sleep/inc
-# SOURCES += $(wildcard $(SDK)/emdrv/sleep/src/*.c)
+# INCLUDES += sdk/emdrv/sleep/inc
+# SOURCES += $(wildcard sdk/emdrv/sleep/src/*.c)
 
-# INCLUDES += $(SDK)/emdrv/spidrv/inc
-# SOURCES += $(wildcard $(SDK)/emdrv/spidrv/src/*.c)
+# INCLUDES += sdk/emdrv/spidrv/inc
+# SOURCES += $(wildcard sdk/emdrv/spidrv/src/*.c)
 
-# INCLUDES += $(SDK)/emdrv/tempdrv/inc
-# SOURCES += $(wildcard $(SDK)/emdrv/tempdrv/src/*.c)
+# INCLUDES += sdk/emdrv/tempdrv/inc
+# SOURCES += $(wildcard sdk/emdrv/tempdrv/src/*.c)
 
-# INCLUDES += $(SDK)/emdrv/uartdrv/inc
-# SOURCES += $(wildcard $(SDK)/emdrv/uartdrv/src/*.c)
+# INCLUDES += sdk/emdrv/uartdrv/inc
+# SOURCES += $(wildcard sdk/emdrv/uartdrv/src/*.c)
 
-# INCLUDES += $(SDK)/emdrv/ustimer/inc
-# SOURCES += $(wildcard $(SDK)/emdrv/ustimer/src/*.c)
+# INCLUDES += sdk/emdrv/ustimer/inc
+# SOURCES += $(wildcard sdk/emdrv/ustimer/src/*.c)
 
 # ----- emlib ------------------------------------------------------------------
 
-INCLUDES += $(SDK)/emlib/inc
-SOURCES += $(wildcard $(SDK)/emlib/src/*.c)
+INCLUDES += sdk/emlib/inc
+SOURCES += $(wildcard sdk/emlib/src/*.c)
 
 # ----- Flags ------------------------------------------------------------------
 
