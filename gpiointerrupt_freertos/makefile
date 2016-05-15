@@ -17,7 +17,6 @@ NAME = firmware
 
 OBJDIR = _obj
 OUTDIR = _out
-SRCDIR = src
 
 EXECUTABLE = $(OUTDIR)/$(NAME).elf
 MAPFILE    = $(OUTDIR)/$(NAME).map
@@ -28,11 +27,11 @@ SYMBOLS += EFM32ZG222F32
 
 include sdk.mk
 
-INCLUDES += freertos/include
-INCLUDES += freertos/portable/GCC/ARM_CM0
-SOURCES += $(wildcard freertos/*.c)
-SOURCES += freertos/portable/MemMang/heap_3.c
-SOURCES += freertos/portable/GCC/ARM_CM0/port.c
+INCLUDES += ../FreeRTOS/Source/include
+INCLUDES += ../FreeRTOS/Source/portable/GCC/ARM_CM0
+SOURCES += $(wildcard ../FreeRTOS/Source/*.c)
+SOURCES += ../FreeRTOS/Source/portable/MemMang/heap_3.c
+SOURCES += ../FreeRTOS/Source/portable/GCC/ARM_CM0/port.c
 
 # Global header files
 INCLUDES += src/include
@@ -55,7 +54,7 @@ CPPFLAGS += $(addprefix -D, $(SYMBOLS))
 CPPFLAGS += $(addprefix -I, $(INCLUDES))
 
 CFLAGS   += -O0 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c11
-CXXFLAGS += -O0 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c++14
+CXXFLAGS += -O0 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c++17
 
 LDFLAGS += $(addprefix -L, $(LIB_DIRS))
 LDFLAGS += --specs=nano.specs
@@ -65,41 +64,6 @@ LDFLAGS += -Wl,-Map=$(MAPFILE)
 
 LIBFLAGS = $(addprefix -l, $(LIBRARIES))
 
-# ----- Objects ----------------------------------------------------------------
-
-OBJECTS = $(addprefix $(OBJDIR)/,$(addsuffix .o,$(basename $(SOURCES))))
-
 # ----- Rules ------------------------------------------------------------------
 
-.PHONY: all clean download size
-
-.PRECIOUS: $(OBJECTS)
-
-.SILENT:
-
-all: $(EXECUTABLE)
-
-clean:
-	$(RMDIR) $(OBJDIR)
-	$(RMDIR) $(OUTDIR)
-
-download: $(EXECUTABLE)
-	$(GDB) -x download.gdb $<
-
-size: $(EXECUTABLE)
-	$(SIZE) $^
-
-$(EXECUTABLE): $(OBJECTS)
-	$(MKDIR) $(dir $@)
-	$(GCC) $(GCCFLAGS) $(LDFLAGS) $^ $(LIBFLAGS) -o $@
-	echo $@
-
-$(OBJDIR)/%.o: %.c
-	$(MKDIR) $(dir $@)
-	$(GCC) $(GCCFLAGS) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
-	echo $@
-
-$(OBJDIR)/%.o: %.cpp
-	$(MKDIR) $(dir $@)
-	$(GCC) $(GCCFLAGS) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
-	echo $@
+include ../rules.mk
