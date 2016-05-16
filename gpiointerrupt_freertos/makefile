@@ -7,12 +7,7 @@ include ../config.mk
 SYMBOLS += EFM32ZG222F32
 
 include sdk.mk
-
-INCLUDES += ../FreeRTOS/Source/include
-INCLUDES += ../FreeRTOS/Source/portable/GCC/ARM_CM0
-SOURCES += $(wildcard ../FreeRTOS/Source/*.c)
-SOURCES += ../FreeRTOS/Source/portable/MemMang/heap_3.c
-SOURCES += ../FreeRTOS/Source/portable/GCC/ARM_CM0/port.c
+include freertos.mk
 
 # Global header files
 INCLUDES += src/include
