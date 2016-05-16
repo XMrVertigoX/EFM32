@@ -1,25 +1,6 @@
-# ----- Toolchain --------------------------------------------------------------
+# ----- Configuration ----------------------------------------------------------
 
-TOOLCHAIN_PREFIX = arm-none-eabi-
-
-GCC  = $(TOOLCHAIN_PREFIX)gcc
-GDB  = $(TOOLCHAIN_PREFIX)gdb
-SIZE = $(TOOLCHAIN_PREFIX)size
-
-# ----- Tools ------------------------------------------------------------------
-
-MKDIR = mkdir -p
-RMDIR = rm -rf
-
-# ----- Directories and Files --------------------------------------------------
-
-NAME = firmware
-
-OBJDIR = _obj
-OUTDIR = _out
-
-EXECUTABLE = $(OUTDIR)/$(NAME).elf
-MAPFILE    = $(OUTDIR)/$(NAME).map
+include ../config.mk
 
 # ----- Sources ----------------------------------------------------------------
 
@@ -41,8 +22,8 @@ SOURCES += $(wildcard src/*.cpp)
 
 # ----- Libraries --------------------------------------------------------------
 
-LIBRARIES += stdc++
-LIBRARIES += arm_cortexM0l_math
+LIBS += stdc++
+LIBS += arm_cortexM0l_math
 
 # ----- Flags ------------------------------------------------------------------
 
@@ -50,19 +31,14 @@ GCCFLAGS += -march=armv6-m
 GCCFLAGS += -mtune=cortex-m0plus
 GCCFLAGS += -mthumb
 
-CPPFLAGS += $(addprefix -D, $(SYMBOLS))
-CPPFLAGS += $(addprefix -I, $(INCLUDES))
+# CPPFLAGS +=
 
-CFLAGS   += -O0 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c11
-CXXFLAGS += -O0 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c++17
+CFLAGS   += -O3 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c11
+CXXFLAGS += -O3 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c++17
 
-LDFLAGS += $(addprefix -L, $(LIB_DIRS))
 LDFLAGS += --specs=nano.specs
 LDFLAGS += --specs=nosys.specs
 LDFLAGS += -Wl,--gc-sections
-LDFLAGS += -Wl,-Map=$(MAPFILE)
-
-LIBFLAGS = $(addprefix -l, $(LIBRARIES))
 
 # ----- Rules ------------------------------------------------------------------
 

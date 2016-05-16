@@ -1,11 +1,2 @@
-# Eclipse Project/Workspace files
-**/.cproject
-**/.project
-**/.metadata
-**/.settings
-**/RemoteSystemsTempFiles
-Packages
-
-# Toolchin output
 **/_obj
 **/_out
