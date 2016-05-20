@@ -1,5 +1,6 @@
 # ----- Files ------------------------------------------------------------------
 
+BINARY     = $(OUTPUT_DIR)/$(OUTPUT_FILE).bin
 EXECUTABLE = $(OUTPUT_DIR)/$(OUTPUT_FILE).elf
 MAPFILE    = $(OUTPUT_DIR)/$(OUTPUT_FILE).map
 
@@ -15,15 +16,18 @@ LIBFLAGS = $(addprefix -l, $(LIBS))
 
 # ----- Objects ----------------------------------------------------------------
 
-OBJECTS = $(addprefix $(OBJECT_DIR),$(abspath $(addsuffix .o,$(basename $(SOURCES)))))
+SOURCE_FILES = $(sort $(realpath $(SOURCES)))
+OBJECT_FILES = $(addsuffix .o,$(basename $(SOURCE_FILES)))
+
+OBJECTS = $(addprefix $(OBJECT_DIR),$(OBJECT_FILES))
 
 # ----- Rules ------------------------------------------------------------------
 
 .PHONY: all clean download
 
-all: $(EXECUTABLE)
+all: $(EXECUTABLE) $(BINARY)
 	@echo # New line for better reading
-	$(SIZE) $^
+	$(SIZE) $<
 	@echo # Another new line for even better reading
 
 clean:
@@ -36,6 +40,11 @@ download: $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(MKDIR) $(dir $@)
 	$(GCC) $(GCCFLAGS) $(LDFLAGS) $^ $(LIBFLAGS) -o $@
+	@echo $@
+
+$(BINARY): $(EXECUTABLE)
+	$(MKDIR) $(dir $@)
+	$(OBJCOPY) -O binary $< $@
 	@echo $@
 
 $(OBJECT_DIR)/%.o: /%.c
