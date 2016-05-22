@@ -16,8 +16,8 @@
 #define configUSE_PREEMPTION 1
 #define configUSE_TICK_HOOK 0
 
-#define INCLUDE_vTaskPrioritySet 0
-#define INCLUDE_uxTaskPriorityGet 0
+#define INCLUDE_vTaskPrioritySet 1
+#define INCLUDE_uxTaskPriorityGet 1
 #define INCLUDE_vTaskDelete 1
 #define INCLUDE_vTaskSuspend 1
 #define INCLUDE_vTaskDelayUntil 1
