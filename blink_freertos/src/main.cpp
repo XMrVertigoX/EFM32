@@ -6,8 +6,9 @@
 #include "em_gpio.h"
 
 #include "FreeRTOS.h"
-#include "semphr.h"
 #include "task.h"
+
+#include "util.hpp"
 
 typedef struct task_params_t {
     GPIO_Port_TypeDef port;
@@ -26,7 +27,7 @@ static void setupGpio() {
     GPIO_PinModeSet(gpioPortC, 11, gpioModePushPullDrive, 0);
 }
 
-void blinkLed_task(void *user) {
+void task_blinkLed(void *user) {
     task_params_t *params = (task_params_t *)user;
 
     for (;;) {
@@ -44,10 +45,8 @@ int main(void) {
     led0_params = {gpioPortC, 10, 1000};
     led1_params = {gpioPortC, 11, 500};
 
-    xTaskCreate(blinkLed_task, NULL, 128, &led0_params, tskIDLE_PRIORITY + 1,
-                NULL);
-    xTaskCreate(blinkLed_task, NULL, 128, &led1_params, tskIDLE_PRIORITY + 1,
-                NULL);
+    xTaskCreate(task_blinkLed, NULL, 128, &led0_params, 1, NULL);
+    xTaskCreate(task_blinkLed, NULL, 128, &led1_params, 1, NULL);
 
     vTaskStartScheduler();
 
