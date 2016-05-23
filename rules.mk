@@ -1,8 +1,8 @@
 # ----- Files ------------------------------------------------------------------
 
-BINARY     = $(OUTPUT_DIR)/$(OUTPUT_FILE).bin
-EXECUTABLE = $(OUTPUT_DIR)/$(OUTPUT_FILE).elf
-MAPFILE    = $(OUTPUT_DIR)/$(OUTPUT_FILE).map
+BINARY     = $(OUTPUT_DIR)/$(PROJECT_NAME).bin
+EXECUTABLE = $(OUTPUT_DIR)/$(PROJECT_NAME).elf
+MAPFILE    = $(OUTPUT_DIR)/$(PROJECT_NAME).map
 
 # ----- Flags ------------------------------------------------------------------
 
@@ -40,19 +40,15 @@ download: $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(MKDIR) $(dir $@)
 	$(GCC) $(GCCFLAGS) $(LDFLAGS) $^ $(LIBFLAGS) -o $@
-	@echo $@
 
 $(BINARY): $(EXECUTABLE)
 	$(MKDIR) $(dir $@)
 	$(OBJCOPY) -O binary $< $@
-	@echo $@
 
 $(OBJECT_DIR)/%.o: /%.c
 	$(MKDIR) $(dir $@)
 	$(GCC) $(GCCFLAGS) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
-	@echo $@
 
 $(OBJECT_DIR)/%.o: /%.cpp
 	$(MKDIR) $(dir $@)
 	$(GCC) $(GCCFLAGS) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
-	@echo $@

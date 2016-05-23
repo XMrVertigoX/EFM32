@@ -2,6 +2,8 @@
 
 include ../config.mk
 
+PROJECT_NAME = blink_freertos
+
 # ----- Sources ----------------------------------------------------------------
 
 SYMBOLS += EFM32ZG222F32
