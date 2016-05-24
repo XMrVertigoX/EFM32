@@ -8,8 +8,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "util.hpp"
-
 typedef struct task_params_t {
     GPIO_Port_TypeDef port;
     unsigned int pin;
