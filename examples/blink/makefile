@@ -2,7 +2,7 @@
 
 include ../config.mk
 
-SDK_DIR = ../Gecko_SDK
+SDK_DIR = ../../Gecko_SDK
 
 # ----- Sources ----------------------------------------------------------------
 
