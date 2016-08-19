@@ -16,7 +16,3 @@ RMDIR = rm -rf
 
 OBJECT_DIR = _obj
 OUTPUT_DIR = _out
-
-# ----- Default ---------------------------------------------------------------
-
-PROJECT_NAME = project_name_no_set

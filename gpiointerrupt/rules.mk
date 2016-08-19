@@ -31,24 +31,30 @@ all: $(EXECUTABLE) $(BINARY)
 	@echo # Another new line for even better reading
 
 clean:
+	@echo [ RMD ] $(OBJECT_DIR)
 	$(RMDIR) $(OBJECT_DIR)
+	@echo [ RMD ] $(OUTPUT_DIR)
 	$(RMDIR) $(OUTPUT_DIR)
 
 download: $(EXECUTABLE)
 	$(GDB) -q -x download.gdb $<
 
 $(EXECUTABLE): $(OBJECTS)
+	@echo [ LNK ] $(notdir $@)
 	$(MKDIR) $(dir $@)
 	$(GCC) $(GCCFLAGS) $(LDFLAGS) $^ $(LIBFLAGS) -o $@
 
 $(BINARY): $(EXECUTABLE)
+	@echo [ CPY ] $(notdir $@)
 	$(MKDIR) $(dir $@)
 	$(OBJCOPY) -O binary $< $@
 
 $(OBJECT_DIR)/%.o: /%.c
+	@echo [ CMP ] $(notdir $@)
 	$(MKDIR) $(dir $@)
 	$(GCC) $(GCCFLAGS) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 $(OBJECT_DIR)/%.o: /%.cpp
+	@echo [ CMP ] $(notdir $@)
 	$(MKDIR) $(dir $@)
 	$(GCC) $(GCCFLAGS) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<

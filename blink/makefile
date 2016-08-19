@@ -9,7 +9,6 @@ PROJECT_NAME = blink_freertos
 SYMBOLS += EFM32ZG222F32
 
 include sdk.mk
-include freertos.mk
 
 # Global header files
 INCLUDES += src/config
@@ -27,7 +26,7 @@ GCCFLAGS += -march=armv6-m
 GCCFLAGS += -mtune=cortex-m0plus
 GCCFLAGS += -mthumb
 
-COMMON = -O3 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer
+COMMON = -Og -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer
 
 CFLAGS += $(COMMON)
 CFLAGS += -std=c11

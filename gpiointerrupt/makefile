@@ -7,10 +7,9 @@ include config.mk
 SYMBOLS += EFM32ZG222F32
 
 include sdk.mk
-include freertos.mk
 
 # Global header files
-INCLUDES += src/include
+INCLUDES += src/config
 
 # Project sources files
 SOURCES += $(wildcard src/*.cpp)
@@ -28,8 +27,8 @@ GCCFLAGS += -mthumb
 
 # CPPFLAGS +=
 
-CFLAGS   += -O3 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c11
-CXXFLAGS += -O3 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c++17
+CFLAGS   += -Og -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c11
+CXXFLAGS += -Og -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c++17
 
 LDFLAGS += --specs=nano.specs
 LDFLAGS += --specs=nosys.specs

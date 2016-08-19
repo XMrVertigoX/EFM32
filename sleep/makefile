@@ -9,7 +9,6 @@ PROJECT_NAME = blink_freertos
 SYMBOLS += EFM32ZG222F32
 
 include sdk.mk
-include freertos.mk
 
 # Global header files
 INCLUDES += src/config

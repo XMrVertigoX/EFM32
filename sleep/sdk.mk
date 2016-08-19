@@ -1,53 +1,43 @@
-SDK_DIR = ../Gecko_SDK
+CMSIS = $(GECKO_SDK)/cmsis
+DEVICE = $(GECKO_SDK)/Device/SiliconLabs/EFM32ZG
+EMDRV = $(GECKO_SDK)/emdrv
+EMLIB = $(GECKO_SDK)/emlib
+FREERTOS = $(GECKO_SDK)/reptile/FreeRTOS/Source
 
-# ----- CMSIS ------------------------------------------------------------------
+# ----- CMSIS -----------------------------------------------------------------
 
-INCLUDES += $(SDK_DIR)/cmsis/Include
-LIB_DIRS += $(SDK_DIR)/cmsis/Lib/GCC
+INCLUDES += $(CMSIS)/Include
+LIB_DIRS += $(CMSIS)/Lib/GCC
 
-# ----- Device -----------------------------------------------------------------
+# ----- Device ----------------------------------------------------------------
 
-INCLUDES += $(SDK_DIR)/Device/SiliconLabs/EFM32ZG/Include
-SOURCES += $(SDK_DIR)/Device/SiliconLabs/EFM32ZG/Source/GCC/startup_efm32zg.c
-SOURCES += $(SDK_DIR)/Device/SiliconLabs/EFM32ZG/Source/system_efm32zg.c
-LINKERSCRIPT = $(SDK_DIR)/Device/SiliconLabs/EFM32ZG/Source/GCC/efm32zg.ld
+INCLUDES += $(DEVICE)/Include
+SOURCES += $(DEVICE)/Source/GCC/startup_efm32zg.c
+SOURCES += $(DEVICE)/Source/system_efm32zg.c
 
-# ----- emdrv ------------------------------------------------------------------
+# ----- emdrv -----------------------------------------------------------------
 
-INCLUDES += $(SDK_DIR)/emdrv/common/inc
+INCLUDES += $(EMDRV)/sleep/inc
+SOURCES += $(wildcard $(EMDRV)/sleep/src/*.c)
 
-# INCLUDES += $(SDK_DIR)/emdrv/dmadrv/inc
-# SOURCES += $(wildcard $(SDK_DIR)/emdrv/dmadrv/src/*.c)
+# ----- emlib -----------------------------------------------------------------
 
-# INCLUDES += $(SDK_DIR)/emdrv/gpiointerrupt/inc
-# SOURCES += $(wildcard $(SDK_DIR)/emdrv/gpiointerrupt/src/*.c)
+INCLUDES += $(EMLIB)/inc
+SOURCES += $(wildcard $(EMLIB)/src/*.c)
 
-# INCLUDES += $(SDK_DIR)/emdrv/nvm/inc
-# SOURCES += $(wildcard $(SDK_DIR)/emdrv/nvm/src/*.c)
+# ----- FreeRTOS --------------------------------------------------------------
 
-# INCLUDES += $(SDK_DIR)/emdrv/rtcdrv/inc
-# SOURCES += $(wildcard $(SDK_DIR)/emdrv/rtcdrv/src/*.c)
+INCLUDES += $(FREERTOS)/include
+INCLUDES += $(FREERTOS)/portable/GCC/ARM_CM0
+SOURCES += $(FREERTOS)/event_groups.c
+SOURCES += $(FREERTOS)/list.c
+SOURCES += $(FREERTOS)/queue.c
+SOURCES += $(FREERTOS)/tasks.c
+SOURCES += $(FREERTOS)/portable/MemMang/heap_3.c
+SOURCES += $(FREERTOS)/portable/GCC/ARM_CM0/port.c
 
-INCLUDES += $(SDK_DIR)/emdrv/sleep/inc
-SOURCES += $(wildcard $(SDK_DIR)/emdrv/sleep/src/*.c)
+# ----- Flags -----------------------------------------------------------------
 
-# INCLUDES += $(SDK_DIR)/emdrv/spidrv/inc
-# SOURCES += $(wildcard $(SDK_DIR)/emdrv/spidrv/src/*.c)
+LINKERSCRIPT = $(DEVICE)/Source/GCC/efm32zg.ld
 
-# INCLUDES += $(SDK_DIR)/emdrv/tempdrv/inc
-# SOURCES += $(wildcard $(SDK_DIR)/emdrv/tempdrv/src/*.c)
-
-# INCLUDES += $(SDK_DIR)/emdrv/uartdrv/inc
-# SOURCES += $(wildcard $(SDK_DIR)/emdrv/uartdrv/src/*.c)
-
-# INCLUDES += $(SDK_DIR)/emdrv/ustimer/inc
-# SOURCES += $(wildcard $(SDK_DIR)/emdrv/ustimer/src/*.c)
-
-# ----- emlib ------------------------------------------------------------------
-
-INCLUDES += $(SDK_DIR)/emlib/inc
-SOURCES += $(wildcard $(SDK_DIR)/emlib/src/*.c)
-
-# ----- Flags ------------------------------------------------------------------
-
-LDFLAGS += -Wl,--script=$(LINKERSCRIPT)
+LDFLAGS += -T $(LINKERSCRIPT)

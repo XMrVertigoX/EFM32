@@ -47,6 +47,4 @@ int main(void) {
     xTaskCreate(task_blinkLed, NULL, 128, &led1_params, 1, NULL);
 
     vTaskStartScheduler();
-
-    return 0;
 }

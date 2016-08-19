@@ -88,6 +88,4 @@ int main(void) {
     GPIOINT_Init();
 
     vTaskStartScheduler();
-
-    return 0;
 }
