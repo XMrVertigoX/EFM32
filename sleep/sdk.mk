@@ -1,3 +1,5 @@
+GECKO_SDK = ../libs/Gecko_SDK
+
 CMSIS = $(GECKO_SDK)/cmsis
 DEVICE = $(GECKO_SDK)/Device/SiliconLabs/EFM32ZG
 EMDRV = $(GECKO_SDK)/emdrv
