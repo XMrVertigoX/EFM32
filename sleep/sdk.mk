@@ -23,13 +23,13 @@ SOURCES += $(DEVICE)/Source/system_efm32zg.c
 
 # ----- emdrv -----------------------------------------------------------------
 
-INCLUDES += $(EMDRV)/common/inc
+# INCLUDES += $(EMDRV)/common/inc
 
-INCLUDES += $(EMDRV)/rtcdrv/inc
-SOURCES += $(EMDRV)/rtcdrv/src/rtcdriver.c
+# INCLUDES += $(EMDRV)/rtcdrv/inc
+# SOURCES += $(EMDRV)/rtcdrv/src/rtcdriver.c
 
-INCLUDES += $(EMDRV)/sleep/inc
-SOURCES += $(EMDRV)/sleep/src/sleep.c
+# INCLUDES += $(EMDRV)/sleep/inc
+# SOURCES += $(EMDRV)/sleep/src/sleep.c
 
 # ----- emlib -----------------------------------------------------------------
 

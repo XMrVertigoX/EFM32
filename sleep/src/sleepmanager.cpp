@@ -1,72 +1,82 @@
+#include <em_cmu.h>
+#include <em_emu.h>
+#include <em_gpio.h>
 #include <em_int.h>
-
-#include <rtcdriver.h>
-#include <sleep.h>
+#include <em_rtc.h>
 
 #include <FreeRTOS.h>
 #include <task.h>
 
 #include "sleepmanager.hpp"
 
+#define LFRCO_FREQ 32768
+
 void SleepManager::init() {
-    SLEEP_Init(NULL, NULL);
-    RTCDRV_Init();
-    RTCDRV_AllocateTimer(&timerId);
+    CMU_OscillatorEnable(cmuOsc_LFRCO, true, true);
+
+    CMU_ClockEnable(cmuClock_CORELE, true);
+    CMU_ClockSelectSet(cmuClock_LFA, cmuSelect_LFRCO);
+    CMU_ClockEnable(cmuClock_RTC, true);
+
+    NVIC_ClearPendingIRQ(RTC_IRQn);
+    NVIC_EnableIRQ(RTC_IRQn);
+
+    RTC_Init(&rtcInit);
 }
 uint32_t SleepManager::startTimer(uint32_t expectedSleepTime) {
-    RTCDRV_StartTimer(timerId, rtcdrvTimerTypeOneshot, expectedSleepTime, NULL,
-                      NULL);
-
     return (0);
 }
 
 uint32_t SleepManager::stopTimer(uint32_t &remainingSleepTime) {
-    RTCDRV_TimeRemaining(timerId, &remainingSleepTime);
-    RTCDRV_StopTimer(timerId);
-
     return (0);
 }
 
 uint32_t SleepManager::sleep(uint32_t expectedSleepTime) {
     uint32_t remainingSleepTime;
 
-    if (expectedSleepTime) {
-        startTimer(expectedSleepTime);
-    }
-
-    SLEEP_Sleep();
-
-    if (expectedSleepTime) {
-        stopTimer(remainingSleepTime);
-    }
+    startTimer(expectedSleepTime);
+    EMU_EnterEM2(true);
+    stopTimer(remainingSleepTime);
 
     return (expectedSleepTime - remainingSleepTime);
 }
 
+void RTC_IRQHandler(void) {
+    // TODO: Check for correct interrupt
+    RTC_IntClear(RTC_IFC_COMP0);
+    // GPIO_PinOutToggle(gpioPortC, 11);
+}
+
 // ----- FreeRTOS hook function -----------------------------------------------
 
-void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTicks) {
+void vPortSuppressTicksAndSleep(TickType_t idleTicks) {
     SleepManager &sleepManager = SleepManager::getInstance();
-
-    uint32_t expectedSleepTime;
-    uint32_t actualSleepTime;
-
-    INT_Disable();
 
     eSleepModeStatus eSleepStatus = eTaskConfirmSleepModeStatus();
 
-    switch (eSleepStatus) {
-        case eAbortSleep: {
-        } break;
-        case eStandardSleep: {
-            expectedSleepTime = xExpectedIdleTicks * portTICK_PERIOD_MS;
-            actualSleepTime = sleepManager.sleep(expectedSleepTime);
-            vTaskStepTick(actualSleepTime / portTICK_PERIOD_MS);
-        } break;
-        case eNoTasksWaitingTimeout: {
-            sleepManager.sleep();
-        } break;
+    if (eSleepStatus == eAbortSleep) {
+        return;
     }
+
+    INT_Disable();
+
+    RTC_CounterReset();
+
+    if (eSleepStatus == eStandardSleep) {
+        RTC_CompareSet(0, ((idleTicks * LFRCO_FREQ) / configTICK_RATE_HZ) - 1);
+        RTC_IntEnable(RTC_IEN_COMP0);
+    } else if (eSleepStatus == eNoTasksWaitingTimeout) {
+        // TODO
+    }
+
+    EMU_EnterEM2(true);
+
+    RTC_IntDisable(RTC_IEN_COMP0);
+
+    uint32_t rtcAfter = RTC_CounterGet();
+    uint32_t foo = ((rtcAfter + 1) * configTICK_RATE_HZ) / LFRCO_FREQ;
+
+    vTaskStepTick(foo);
 
     INT_Enable();
 }

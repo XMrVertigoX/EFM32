@@ -1,12 +1,4 @@
-#include <cstdio>
-#include <cstdlib>
-
 #include <em_chip.h>
-#include <em_cmu.h>
-#include <em_gpio.h>
-
-#include <rtcdriver.h>
-#include <sleep.h>
 
 #include <FreeRTOS.h>
 #include <task.h>
