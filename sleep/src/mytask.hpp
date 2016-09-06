@@ -4,7 +4,7 @@
 #include <xXx/utils/arduinotask.hpp>
 #include <xXx/utils/singleton.hpp>
 
-class MyTask : public ArduinoTask, public Singleton<MyTask> {
+class MyTask : public Singleton<MyTask>, public ArduinoTask {
     friend class Singleton<MyTask>;
 
    public:
