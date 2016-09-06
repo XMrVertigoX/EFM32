@@ -2,18 +2,20 @@
 
 include config.mk
 
-PROJECT_NAME = blink_freertos
+PROJECT_NAME = sleep
 
 # ----- Sources ---------------------------------------------------------------
 
-SYMBOLS += EFM32ZG222F32
+# SYMBOLS += NDEBUG
 
 include sdk.mk
 
-# Global header files
-INCLUDES += src/config
+INCLUDES += ../libs
+SOURCES += $(wildcard ../libs/xXx/support/*.cpp)
+SOURCES += $(wildcard ../libs/xXx/utils/*.cpp)
 
-# Project sources files
+INCLUDES += src
+INCLUDES += src/config
 SOURCES += $(wildcard src/*.cpp)
 
 # ----- Libraries -------------------------------------------------------------
@@ -26,14 +28,15 @@ GCCFLAGS += -march=armv6-m
 GCCFLAGS += -mtune=cortex-m0plus
 GCCFLAGS += -mthumb
 
-COMMON = -O3 -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer
+COMMON = -Og -g -fdata-sections -ffunction-sections -fno-exceptions -fno-unwind-tables -fno-builtin
 
 CFLAGS += $(COMMON)
-CFLAGS += -std=c11
+CFLAGS += -std=gnu11
 
 CXXFLAGS += $(COMMON)
-CXXFLAGS += -std=c++17
+CXXFLAGS += -std=gnu++14
 CXXFLAGS += -fno-rtti
+CXXFLAGS += -fno-threadsafe-statics
 
 # CPPFLAGS +=
 

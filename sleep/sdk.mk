@@ -6,6 +6,10 @@ EMDRV = $(GECKO_SDK)/emdrv
 EMLIB = $(GECKO_SDK)/emlib
 FREERTOS = $(GECKO_SDK)/reptile/FreeRTOS/Source
 
+# ----- Symbols ---------------------------------------------------------------
+
+SYMBOLS += EFM32ZG222F32
+
 # ----- CMSIS -----------------------------------------------------------------
 
 INCLUDES += $(CMSIS)/Include
@@ -19,8 +23,13 @@ SOURCES += $(DEVICE)/Source/system_efm32zg.c
 
 # ----- emdrv -----------------------------------------------------------------
 
+INCLUDES += $(EMDRV)/common/inc
+
+INCLUDES += $(EMDRV)/rtcdrv/inc
+SOURCES += $(EMDRV)/rtcdrv/src/rtcdriver.c
+
 INCLUDES += $(EMDRV)/sleep/inc
-SOURCES += $(wildcard $(EMDRV)/sleep/src/*.c)
+SOURCES += $(EMDRV)/sleep/src/sleep.c
 
 # ----- emlib -----------------------------------------------------------------
 

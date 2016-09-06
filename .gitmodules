@@ -1,3 +1,6 @@
 [submodule "libs/Gecko_SDK"]
 	path = libs/Gecko_SDK
 	url = https://github.com/SiliconLabs/Gecko_SDK.git
+[submodule "libs/xXx"]
+	path = libs/xXx
+	url = https://github.com/XMrVertigoX/xXx_CPP.git
