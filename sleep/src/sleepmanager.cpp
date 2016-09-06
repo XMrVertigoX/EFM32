@@ -9,9 +9,9 @@
 #include "sleepmanager.hpp"
 
 void SleepManager::init() {
+    SLEEP_Init(NULL, NULL);
     RTCDRV_Init();
     RTCDRV_AllocateTimer(&timerId);
-    SLEEP_Init(NULL, NULL);
 }
 uint32_t SleepManager::startTimer(uint32_t expectedSleepTime) {
     RTCDRV_StartTimer(timerId, rtcdrvTimerTypeOneshot, expectedSleepTime, NULL,
@@ -45,7 +45,7 @@ uint32_t SleepManager::sleep(uint32_t expectedSleepTime) {
 
 // ----- FreeRTOS hook function -----------------------------------------------
 
-void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime) {
+void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTicks) {
     SleepManager &sleepManager = SleepManager::getInstance();
 
     uint32_t expectedSleepTime;
@@ -59,7 +59,7 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime) {
         case eAbortSleep: {
         } break;
         case eStandardSleep: {
-            expectedSleepTime = xExpectedIdleTime * portTICK_PERIOD_MS;
+            expectedSleepTime = xExpectedIdleTicks * portTICK_PERIOD_MS;
             actualSleepTime = sleepManager.sleep(expectedSleepTime);
             vTaskStepTick(actualSleepTime / portTICK_PERIOD_MS);
         } break;
