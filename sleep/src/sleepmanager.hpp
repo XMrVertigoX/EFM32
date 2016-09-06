@@ -10,14 +10,14 @@ class SleepManager : public Singleton<SleepManager> {
 
    public:
     void init();
-    uint32_t sleep(uint32_t timeToSleep = 0);
+    uint32_t sleep(uint32_t expectedSleepTime = 0);
 
    private:
     SleepManager() = default;
     ~SleepManager() = default;
 
-    void startTimer(uint32_t timeToSleep);
-    uint32_t stopTimer();
+    uint32_t startTimer(uint32_t expectedSleepTime);
+    uint32_t stopTimer(uint32_t &remainingSleepTime);
 
     RTCDRV_TimerID_t timerId;
 };

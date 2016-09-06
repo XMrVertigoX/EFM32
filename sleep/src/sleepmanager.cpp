@@ -13,22 +13,22 @@ void SleepManager::init() {
     RTCDRV_AllocateTimer(&timerId);
     SLEEP_Init(NULL, NULL);
 }
-void SleepManager::startTimer(uint32_t expectedSleepTime) {
+uint32_t SleepManager::startTimer(uint32_t expectedSleepTime) {
     RTCDRV_StartTimer(timerId, rtcdrvTimerTypeOneshot, expectedSleepTime, NULL,
                       NULL);
+
+    return (0);
 }
 
-uint32_t SleepManager::stopTimer() {
-    uint32_t timeRemaining;
-
-    RTCDRV_TimeRemaining(timerId, &timeRemaining);
+uint32_t SleepManager::stopTimer(uint32_t &remainingSleepTime) {
+    RTCDRV_TimeRemaining(timerId, &remainingSleepTime);
     RTCDRV_StopTimer(timerId);
 
-    return (timeRemaining);
+    return (0);
 }
 
 uint32_t SleepManager::sleep(uint32_t expectedSleepTime) {
-    uint32_t remainingSleepTime = 0;
+    uint32_t remainingSleepTime;
 
     if (expectedSleepTime) {
         startTimer(expectedSleepTime);
@@ -37,7 +37,7 @@ uint32_t SleepManager::sleep(uint32_t expectedSleepTime) {
     SLEEP_Sleep();
 
     if (expectedSleepTime) {
-        remainingSleepTime = stopTimer();
+        stopTimer(remainingSleepTime);
     }
 
     return (expectedSleepTime - remainingSleepTime);
