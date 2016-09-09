@@ -5,9 +5,6 @@
 
 #include <xXx/utils/singleton.hpp>
 
-typedef uint32_t rtcTick_t;
-typedef uint32_t rtosTick_t;
-
 class SleepManager : public Singleton<SleepManager> {
     friend class Singleton<SleepManager>;
 

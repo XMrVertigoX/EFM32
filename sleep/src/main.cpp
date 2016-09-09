@@ -7,13 +7,13 @@
 #include "sleepmanager.hpp"
 
 SleepManager &sleepManager = SleepManager::getInstance();
-MyTask &task = MyTask::getInstance();
+MyTask &task0 = MyTask::getInstance();
 
 int main(void) {
     CHIP_Init();
 
     sleepManager.init();
-    task.attachToScheduler(128, 1);
+    task0.attachToScheduler(128, 1);
 
     vTaskStartScheduler();
 }
