@@ -6,9 +6,9 @@ PROJECT_NAME = sleep
 
 # ----- Sources ---------------------------------------------------------------
 
-# SYMBOLS += NDEBUG
-
 include sdk.mk
+
+# SYMBOLS += NDEBUG
 
 INCLUDES += ../libs
 SOURCES += $(wildcard ../libs/xXx/support/*.cpp)

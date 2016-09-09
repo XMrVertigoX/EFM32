@@ -22,8 +22,6 @@ class SleepManager : public Singleton<SleepManager> {
     ~SleepManager() = default;
 
     uint32_t _clockFreqency = 0;
-    uint32_t _rtcAfter = 0;
-    uint32_t _rtcBefore = 0;
 };
 
 #endif /* SLEEPMANAGER_HPP_ */

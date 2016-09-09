@@ -37,10 +37,13 @@ uint32_t SleepManager::rtos2rtc(TickType_t rtosTicks) {
 }
 
 uint32_t SleepManager::sleep(TickType_t sleepTicks) {
-    _rtcBefore = RTC_CounterGet();
+    uint32_t rtcAfter;
+    uint32_t rtcBefore;
+
+    rtcBefore = RTC_CounterGet();
 
     if (sleepTicks) {
-        RTC_CompareSet(0, _rtcBefore + rtos2rtc(sleepTicks) - 1);
+        RTC_CompareSet(0, rtcBefore + rtos2rtc(sleepTicks) - 1);
         RTC_IntEnable(RTC_IEN_COMP0);
     }
 
@@ -50,9 +53,9 @@ uint32_t SleepManager::sleep(TickType_t sleepTicks) {
         RTC_IntDisable(RTC_IEN_COMP0);
     }
 
-    _rtcAfter = RTC_CounterGet();
+    rtcAfter = RTC_CounterGet();
 
-    return (rtc2rtos(_rtcAfter - _rtcBefore + 1));
+    return (rtc2rtos(rtcAfter - rtcBefore + 1));
 }
 
 void RTC_IRQHandler(void) {
