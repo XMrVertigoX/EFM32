@@ -6,11 +6,14 @@
 #include "mytask.hpp"
 #include "sleepmanager.hpp"
 
+SleepManager &sleepManager = SleepManager::getInstance();
+MyTask &task = MyTask::getInstance();
+
 int main(void) {
     CHIP_Init();
 
-    SleepManager::getInstance().init();
-    MyTask::getInstance().attachToScheduler(128, 1);
+    sleepManager.init();
+    task.attachToScheduler(128, 1);
 
     vTaskStartScheduler();
 }
