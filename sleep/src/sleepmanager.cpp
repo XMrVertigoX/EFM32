@@ -10,6 +10,8 @@
 #include "sleepmanager.hpp"
 
 void SleepManager::init() {
+    RTC_Init_TypeDef rtcInit = RTC_INIT_DEFAULT;
+
     CMU_OscillatorEnable(cmuOsc_LFRCO, true, true);
 
     CMU_ClockEnable(cmuClock_CORELE, true);
@@ -21,10 +23,9 @@ void SleepManager::init() {
     NVIC_ClearPendingIRQ(RTC_IRQn);
     NVIC_EnableIRQ(RTC_IRQn);
 
-    _rtcInit.enable = false;
-    _rtcInit.comp0Top = false;
+    rtcInit.comp0Top = false;
 
-    RTC_Init(&_rtcInit);
+    RTC_Init(&rtcInit);
 }
 
 TickType_t SleepManager::rtc2rtos(uint32_t rtcTicks) {
@@ -35,14 +36,11 @@ uint32_t SleepManager::rtos2rtc(TickType_t rtosTicks) {
     return ((rtosTicks * _clockFreqency) / configTICK_RATE_HZ);
 }
 
-uint32_t SleepManager::sleep(uint32_t sleepTicks) {
-    uint32_t rtcBefore;
-    uint32_t rtcAfter;
-
-    rtcBefore = RTC_CounterGet();
+uint32_t SleepManager::sleep(TickType_t sleepTicks) {
+    _rtcBefore = RTC_CounterGet();
 
     if (sleepTicks) {
-        RTC_CompareSet(0, rtcBefore + rtos2rtc(sleepTicks) - 1);
+        RTC_CompareSet(0, _rtcBefore + rtos2rtc(sleepTicks) - 1);
         RTC_IntEnable(RTC_IEN_COMP0);
     }
 
@@ -52,15 +50,19 @@ uint32_t SleepManager::sleep(uint32_t sleepTicks) {
         RTC_IntDisable(RTC_IEN_COMP0);
     }
 
-    rtcAfter = RTC_CounterGet();
+    _rtcAfter = RTC_CounterGet();
 
-    return (rtc2rtos(rtcAfter - rtcBefore + 1));
+    return (rtc2rtos(_rtcAfter - _rtcBefore + 1));
+}
+
+void RTC_IRQHandler(void) {
+    RTC_IntClear(RTC_IFC_COMP0);
 }
 
 void vPortSuppressTicksAndSleep(TickType_t expectedSleepTicks) {
     SleepManager &sleepManager = SleepManager::getInstance();
     eSleepModeStatus eSleepStatus = eTaskConfirmSleepModeStatus();
-    uint32_t actualSleepTicks;
+    uint32_t actualSleepTicks = 0;
 
     if (eSleepStatus == eAbortSleep) {
         return;
@@ -77,8 +79,4 @@ void vPortSuppressTicksAndSleep(TickType_t expectedSleepTicks) {
     vTaskStepTick(actualSleepTicks);
 
     INT_Enable();
-}
-
-void RTC_IRQHandler(void) {
-    RTC_IntClear(RTC_IFC_COMP0);
 }

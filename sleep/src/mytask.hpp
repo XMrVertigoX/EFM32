@@ -18,7 +18,7 @@ class MyTask : public Singleton<MyTask>, public ArduinoTask {
     MyTask() = default;
     ~MyTask() = default;
 
-    TickType_t xLastWakeTime;
+    TickType_t xLastWakeTime = 0;
 };
 
 #endif /* MYTASK_HPP_ */
