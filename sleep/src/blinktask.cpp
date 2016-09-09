@@ -4,9 +4,9 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-#include "mytask.hpp"
+#include <blinktask.hpp>
 
-void MyTask::setup() {
+void BlinkTask::setup() {
     xLastWakeTime = xTaskGetTickCount();
 
     CMU_ClockEnable(cmuClock_GPIO, true);
@@ -16,7 +16,7 @@ void MyTask::setup() {
     GPIO_PinOutToggle(gpioPortC, 10);
 }
 
-void MyTask::loop() {
+void BlinkTask::loop() {
     vTaskDelayUntil(&xLastWakeTime, 500 / portTICK_PERIOD_MS);
     GPIO_PinOutToggle(gpioPortC, 10);
     GPIO_PinOutToggle(gpioPortC, 11);

@@ -63,9 +63,9 @@ void RTC_IRQHandler(void) {
 }
 
 void vPortSuppressTicksAndSleep(TickType_t expectedSleepTicks) {
+    uint32_t actualSleepTicks = 0;
     SleepManager &sleepManager = SleepManager::getInstance();
     eSleepModeStatus eSleepStatus = eTaskConfirmSleepModeStatus();
-    uint32_t actualSleepTicks = 0;
 
     if (eSleepStatus == eAbortSleep) {
         return;

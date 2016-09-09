@@ -1,14 +1,14 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-#include <em_assert.h>
+#include <assert.h>
 
-#define configASSERT(x) EFM_ASSERT(x)
+#define configASSERT(x) assert(x)
 #define configCPU_CLOCK_HZ 24000000
-#define configKERNEL_INTERRUPT_PRIORITY 0xFF
+#define configKERNEL_INTERRUPT_PRIORITY ((7 << 5) | 0b00011111)
 #define configMAX_PRIORITIES 4
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY 0xA0
-#define configMINIMAL_STACK_SIZE 32
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY ((5 << 5) | 0b00011111)
+#define configMINIMAL_STACK_SIZE 64
 #define configTICK_RATE_HZ 1000
 #define configTOTAL_HEAP_SIZE 2048
 #define configUSE_16_BIT_TICKS 0
@@ -25,8 +25,7 @@
 #define INCLUDE_vTaskDelayUntil 1
 #define INCLUDE_vTaskDelay 1
 
-#define portSUPPRESS_TICKS_AND_SLEEP(xIdleTime) \
-    vPortSuppressTicksAndSleep(xIdleTime)
+#define portSUPPRESS_TICKS_AND_SLEEP vPortSuppressTicksAndSleep
 
 #define vPortSVCHandler SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
