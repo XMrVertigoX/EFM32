@@ -3,7 +3,7 @@
 
 #include <em_rtc.h>
 
-#include <xXx/utils/singleton.hpp>
+#include <xXx/templates/singleton.hpp>
 
 class SleepManager : public Singleton<SleepManager> {
     friend class Singleton<SleepManager>;

@@ -4,10 +4,10 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
+#include <xXx/templates/singleton.hpp>
 #include <xXx/utils/arduinotask.hpp>
-#include <xXx/utils/singleton.hpp>
 
-class BlinkTask : public Singleton<BlinkTask>, public ArduinoTask {
+class BlinkTask : public Singleton<BlinkTask>, public xXx::ArduinoTask {
     friend class Singleton<BlinkTask>;
 
    public:
