@@ -1,6 +1,27 @@
-# ----- Configuration ---------------------------------------------------------
+# ----- Toolchain -------------------------------------------------------------
 
-include rules_config.mk
+TOOLCHAIN_PREFIX = arm-none-eabi-
+
+GCC     = $(TOOLCHAIN_PREFIX)gcc
+GDB     = $(TOOLCHAIN_PREFIX)gdb
+OBJCOPY = $(TOOLCHAIN_PREFIX)objcopy
+SIZE    = $(TOOLCHAIN_PREFIX)size
+
+# ----- Tools -----------------------------------------------------------------
+
+MKDIR = mkdir -p
+RM = rm -rf
+
+# ----- Directories and files -------------------------------------------------
+
+BINARY     = $(PROJECT_NAME).bin
+EXECUTABLE = $(PROJECT_NAME).elf
+MAPFILE    = $(PROJECT_NAME).map
+
+PARENT_DIR = $(dir $(CURDIR))
+OUTPUT_DIR = _out
+
+VPATH += $(OUTPUT_DIR)
 
 # ----- Flags -----------------------------------------------------------------
 
