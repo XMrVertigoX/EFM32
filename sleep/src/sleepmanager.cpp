@@ -28,12 +28,12 @@ void SleepManager::init() {
     RTC_Init(&rtcInit);
 }
 
-TickType_t SleepManager::rtc2rtos(uint32_t rtcTicks) {
-    return ((rtcTicks * configTICK_RATE_HZ) / _clockFreqency);
+TickType_t SleepManager::rtc2rtos(uint32_t ticks) {
+    return ((ticks * configTICK_RATE_HZ) / _clockFreqency);
 }
 
-uint32_t SleepManager::rtos2rtc(TickType_t rtosTicks) {
-    return ((rtosTicks * _clockFreqency) / configTICK_RATE_HZ);
+uint32_t SleepManager::rtos2rtc(TickType_t ticks) {
+    return ((ticks * _clockFreqency) / configTICK_RATE_HZ);
 }
 
 uint32_t SleepManager::sleep(TickType_t sleepTicks) {

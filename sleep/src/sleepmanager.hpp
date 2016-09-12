@@ -5,6 +5,8 @@
 
 #include <xXx/templates/singleton.hpp>
 
+using namespace xXx;
+
 class SleepManager : public Singleton<SleepManager> {
     friend class Singleton<SleepManager>;
 
@@ -16,8 +18,8 @@ class SleepManager : public Singleton<SleepManager> {
     SleepManager() = default;
     ~SleepManager() = default;
 
-    TickType_t rtc2rtos(uint32_t rtcTicks);
-    uint32_t rtos2rtc(TickType_t rtosTicks);
+    TickType_t rtc2rtos(uint32_t ticks);
+    uint32_t rtos2rtc(TickType_t ticks);
 
     uint32_t _clockFreqency = 0;
 };

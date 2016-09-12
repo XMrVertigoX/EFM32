@@ -7,7 +7,9 @@
 #include <xXx/templates/singleton.hpp>
 #include <xXx/utils/arduinotask.hpp>
 
-class BlinkTask : public Singleton<BlinkTask>, public xXx::ArduinoTask {
+using namespace xXx;
+
+class BlinkTask : public Singleton<BlinkTask>, public ArduinoTask {
     friend class Singleton<BlinkTask>;
 
    public:
