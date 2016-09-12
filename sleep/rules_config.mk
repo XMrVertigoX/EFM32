@@ -10,9 +10,15 @@ SIZE    = $(TOOLCHAIN_PREFIX)size
 # ----- Tools -----------------------------------------------------------------
 
 MKDIR = mkdir -p
-RMDIR = rm -rf
+RM = rm -rf
 
-# ----- Directories and Files -------------------------------------------------
+# ----- Directories and files -------------------------------------------------
 
-OBJECT_DIR = _obj
+BINARY     = $(PROJECT_NAME).bin
+EXECUTABLE = $(PROJECT_NAME).elf
+MAPFILE    = $(PROJECT_NAME).map
+
 OUTPUT_DIR = _out
+PARENT_DIR = $(dir $(CURDIR))
+
+VPATH += $(OUTPUT_DIR)

@@ -1,25 +1,22 @@
-# ----- Files -----------------------------------------------------------------
+# ----- Configuration ---------------------------------------------------------
 
-BINARY     = $(OUTPUT_DIR)/$(PROJECT_NAME).bin
-EXECUTABLE = $(OUTPUT_DIR)/$(PROJECT_NAME).elf
-MAPFILE    = $(OUTPUT_DIR)/$(PROJECT_NAME).map
+include rules_config.mk
 
 # ----- Flags -----------------------------------------------------------------
 
-CPPFLAGS += $(addprefix -D, $(SYMBOLS))
-CPPFLAGS += $(addprefix -I, $(INCLUDES))
+CPPFLAGS += $(addprefix -D,$(SYMBOLS))
+CPPFLAGS += $(addprefix -I,$(realpath $(INCLUDE_DIRS)))
 
-LDFLAGS += $(addprefix -L, $(LIB_DIRS))
-LDFLAGS += -Wl,-Map=$(MAPFILE)
+LDFLAGS += $(addprefix -L,$(realpath $(LIBRARY_DIRS)))
+LDFLAGS += -Wl,-Map=$(OUTPUT_DIR)/$(MAPFILE)
 
-LIBFLAGS = $(addprefix -l, $(LIBS))
+LIBFLAGS = $(addprefix -l,$(LIBRARIES))
+# LIBFLAGS = -Wl,--start-group $(addprefix -l, $(LIBRARIES)) -Wl,--end-group
 
 # ----- Objects ---------------------------------------------------------------
 
-SOURCE_FILES = $(sort $(realpath $(SOURCES)))
-OBJECT_FILES = $(addsuffix .o,$(basename $(SOURCE_FILES)))
-
-OBJECTS = $(addprefix $(OBJECT_DIR),$(OBJECT_FILES))
+SORTED_SOURCE_FILES = $(sort $(realpath $(SOURCE_FILES)))
+SORTED_OBJECT_FILES = $(addprefix $(OUTPUT_DIR),$(addsuffix .o,$(basename $(SORTED_SOURCE_FILES))))
 
 # ----- Rules -----------------------------------------------------------------
 
@@ -31,30 +28,25 @@ all: $(EXECUTABLE) $(BINARY)
 	@echo # Another new line for even better reading
 
 clean:
-	@echo [ RMD ] $(OBJECT_DIR)
-	$(RMDIR) $(OBJECT_DIR)
-	@echo [ RMD ] $(OUTPUT_DIR)
-	$(RMDIR) $(OUTPUT_DIR)
+	$(RM) $(OUTPUT_DIR)
 
 download: $(EXECUTABLE)
 	$(GDB) -q -x download.gdb $<
 
-$(EXECUTABLE): $(OBJECTS)
-	@echo [ LNK ] $(notdir $@)
+$(OUTPUT_DIR)/$(EXECUTABLE): $(SORTED_OBJECT_FILES)
 	$(MKDIR) $(dir $@)
 	$(GCC) $(GCCFLAGS) $(LDFLAGS) $^ $(LIBFLAGS) -o $@
 
-$(BINARY): $(EXECUTABLE)
-	@echo [ CPY ] $(notdir $@)
+$(OUTPUT_DIR)/$(BINARY): $(EXECUTABLE)
 	$(MKDIR) $(dir $@)
 	$(OBJCOPY) -O binary $< $@
 
-$(OBJECT_DIR)/%.o: /%.c
-	@echo [ CMP ] $(notdir $@)
+$(OUTPUT_DIR)/%.o: /%.c
 	$(MKDIR) $(dir $@)
-	$(GCC) $(GCCFLAGS) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+	$(GCC) $(GCCFLAGS) $(COMMON_CFLAGS) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+	@echo "$(subst $(PARENT_DIR),,$^)"
 
-$(OBJECT_DIR)/%.o: /%.cpp
-	@echo [ CMP ] $(notdir $@)
+$(OUTPUT_DIR)/%.o: /%.cpp
 	$(MKDIR) $(dir $@)
-	$(GCC) $(GCCFLAGS) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
+	$(GCC) $(GCCFLAGS) $(COMMON_CFLAGS) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
+	@echo "$(subst $(PARENT_DIR),,$^)"
