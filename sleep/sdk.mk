@@ -1,10 +1,10 @@
 GECKO_SDK = ../libs/Gecko_SDK
 
-CMSIS = $(GECKO_SDK)/cmsis
-DEVICE = $(GECKO_SDK)/Device/SiliconLabs/EFM32ZG
-EMDRV = $(GECKO_SDK)/emdrv
-EMLIB = $(GECKO_SDK)/emlib
-FREERTOS = $(GECKO_SDK)/reptile/FreeRTOS/Source
+CMSIS     = $(GECKO_SDK)/cmsis
+DEVICE    = $(GECKO_SDK)/Device/SiliconLabs/EFM32ZG
+EMDRV     = $(GECKO_SDK)/emdrv
+EMLIB     = $(GECKO_SDK)/emlib
+FREERTOS  = $(GECKO_SDK)/reptile/FreeRTOS/Source
 
 # ----- Symbols ---------------------------------------------------------------
 
@@ -49,6 +49,4 @@ SOURCE_FILES += $(FREERTOS)/portable/GCC/ARM_CM0/port.c
 
 # ----- Flags -----------------------------------------------------------------
 
-LINKERSCRIPT = $(DEVICE)/Source/GCC/efm32zg.ld
-
-LDFLAGS += -T $(LINKERSCRIPT)
+LDFLAGS += -T $(DEVICE)/Source/GCC/efm32zg.ld
