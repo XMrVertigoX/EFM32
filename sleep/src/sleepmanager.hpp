@@ -1,8 +1,6 @@
 #ifndef SLEEPMANAGER_HPP_
 #define SLEEPMANAGER_HPP_
 
-#include <em_rtc.h>
-
 #include <xXx/templates/singleton.hpp>
 
 using namespace xXx;

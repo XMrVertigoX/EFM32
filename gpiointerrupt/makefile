@@ -1,23 +1,23 @@
 # ----- Configuration ---------------------------------------------------------
 
-include config.mk
+PROJECT_NAME = gpiointerrupt
 
 # ----- Sources ---------------------------------------------------------------
 
-SYMBOLS += EFM32ZG222F32
+SYMBOLS += NDEBUG
 
 include sdk.mk
 
 # Global header files
-INCLUDES += src/config
+INCLUDE_DIRS += src/config
 
 # Project sources files
-SOURCES += $(wildcard src/*.cpp)
+SOURCE_FILES += $(wildcard src/*.cpp)
 
 # ----- Libraries -------------------------------------------------------------
 
-LIBS += stdc++
-LIBS += arm_cortexM0l_math
+LIBRARIES += stdc++
+LIBRARIES += arm_cortexM0l_math
 
 # ----- Flags -----------------------------------------------------------------
 
@@ -36,4 +36,4 @@ LDFLAGS += -Wl,--gc-sections
 
 # ----- Rules -----------------------------------------------------------------
 
-include rules.mk
+include ../libs/xXx/utils/rules.mk

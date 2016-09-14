@@ -6,37 +6,41 @@ EMDRV = $(GECKO_SDK)/emdrv
 EMLIB = $(GECKO_SDK)/emlib
 FREERTOS = $(GECKO_SDK)/reptile/FreeRTOS/Source
 
+# ----- Symbols ---------------------------------------------------------------
+
+SYMBOLS += EFM32ZG222F32
+
 # ----- CMSIS -----------------------------------------------------------------
 
-INCLUDES += $(CMSIS)/Include
-LIB_DIRS += $(CMSIS)/Lib/GCC
+INCLUDE_DIRS += $(CMSIS)/Include
+LIBRARY_DIRS += $(CMSIS)/Lib/GCC
 
 # ----- Device ----------------------------------------------------------------
 
-INCLUDES += $(DEVICE)/Include
-SOURCES += $(DEVICE)/Source/GCC/startup_efm32zg.c
-SOURCES += $(DEVICE)/Source/system_efm32zg.c
+INCLUDE_DIRS += $(DEVICE)/Include
+SOURCE_FILES += $(DEVICE)/Source/GCC/startup_efm32zg.c
+SOURCE_FILES += $(DEVICE)/Source/system_efm32zg.c
 
 # ----- emdrv -----------------------------------------------------------------
 
-INCLUDES += $(EMDRV)/gpiointerrupt/inc
-SOURCES += $(wildcard $(EMDRV)/gpiointerrupt/src/*.c)
+INCLUDE_DIRS += $(EMDRV)/gpiointerrupt/inc
+SOURCE_FILES += $(wildcard $(EMDRV)/gpiointerrupt/src/*.c)
 
 # ----- emlib -----------------------------------------------------------------
 
-INCLUDES += $(EMLIB)/inc
-SOURCES += $(wildcard $(EMLIB)/src/*.c)
+INCLUDE_DIRS += $(EMLIB)/inc
+SOURCE_FILES += $(wildcard $(EMLIB)/src/*.c)
 
 # ----- FreeRTOS --------------------------------------------------------------
 
-INCLUDES += $(FREERTOS)/include
-INCLUDES += $(FREERTOS)/portable/GCC/ARM_CM0
-SOURCES += $(FREERTOS)/event_groups.c
-SOURCES += $(FREERTOS)/list.c
-SOURCES += $(FREERTOS)/queue.c
-SOURCES += $(FREERTOS)/tasks.c
-SOURCES += $(FREERTOS)/portable/MemMang/heap_3.c
-SOURCES += $(FREERTOS)/portable/GCC/ARM_CM0/port.c
+INCLUDE_DIRS += $(FREERTOS)/include
+INCLUDE_DIRS += $(FREERTOS)/portable/GCC/ARM_CM0
+SOURCE_FILES += $(FREERTOS)/event_groups.c
+SOURCE_FILES += $(FREERTOS)/list.c
+SOURCE_FILES += $(FREERTOS)/queue.c
+SOURCE_FILES += $(FREERTOS)/tasks.c
+SOURCE_FILES += $(FREERTOS)/portable/MemMang/heap_3.c
+SOURCE_FILES += $(FREERTOS)/portable/GCC/ARM_CM0/port.c
 
 # ----- Flags -----------------------------------------------------------------
 
