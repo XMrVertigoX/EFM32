@@ -6,7 +6,7 @@ PROJECT_NAME = sleep
 
 include sdk.mk
 
-# SYMBOLS += NDEBUG
+SYMBOLS += NDEBUG
 
 INCLUDE_DIRS += ../libs
 SOURCE_FILES += $(wildcard ../libs/xXx/support/*.cpp)
@@ -48,4 +48,4 @@ LDFLAGS += -Wl,--gc-sections
 
 # ----- Rules -----------------------------------------------------------------
 
-include rules.mk
+include ../libs/xXx/utils/rules.mk

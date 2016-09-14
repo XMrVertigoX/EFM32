@@ -40,6 +40,8 @@ uint32_t SleepManager::sleep(TickType_t sleepTicks) {
     uint32_t rtcAfter;
     uint32_t rtcBefore;
 
+    RTC_Reset();
+
     rtcBefore = RTC_CounterGet();
 
     if (sleepTicks) {
