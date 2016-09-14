@@ -1,6 +1,8 @@
 #ifndef SLEEPMANAGER_HPP_
 #define SLEEPMANAGER_HPP_
 
+#include <em_rtc.h>
+
 #include <xXx/templates/singleton.hpp>
 
 using namespace xXx;
@@ -20,6 +22,7 @@ class SleepManager : public Singleton<SleepManager> {
     uint32_t rtos2rtc(TickType_t ticks);
 
     uint32_t _clockFreqency = 0;
+    RTC_Init_TypeDef _rtcInit = {false, false, false};
 };
 
 #endif /* SLEEPMANAGER_HPP_ */

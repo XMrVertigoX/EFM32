@@ -21,8 +21,7 @@ void SleepManager::init() {
     NVIC_ClearPendingIRQ(RTC_IRQn);
     NVIC_EnableIRQ(RTC_IRQn);
 
-    RTC_Init_TypeDef rtcInit = {false, false, false};
-    RTC_Init(&rtcInit);
+    RTC_Init(&_rtcInit);
 }
 
 TickType_t SleepManager::rtc2rtos(uint32_t ticks) {
