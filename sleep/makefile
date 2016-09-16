@@ -26,13 +26,13 @@ GCCFLAGS += -march=armv6-m
 GCCFLAGS += -mtune=cortex-m0plus
 GCCFLAGS += -mthumb
 
-COMMON_CFLAGS += -Og
-COMMON_CFLAGS += -g
 COMMON_CFLAGS += -fdata-sections
 COMMON_CFLAGS += -ffunction-sections
 COMMON_CFLAGS += -fno-builtin
 COMMON_CFLAGS += -fno-exceptions
 COMMON_CFLAGS += -fno-unwind-tables
+COMMON_CFLAGS += -g
+COMMON_CFLAGS += -Og
 
 CFLAGS += -std=gnu11
 
