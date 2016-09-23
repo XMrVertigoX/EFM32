@@ -1,6 +1,7 @@
 # ----- Configuration ---------------------------------------------------------
 
-PROJECT_NAME = gpiointerrupt
+TOOLCHAIN_PREFIX = arm-none-eabi-
+PROJECT_NAME     = gpiointerrupt
 
 # ----- Sources ---------------------------------------------------------------
 
@@ -37,3 +38,6 @@ LDFLAGS += -Wl,--gc-sections
 # ----- Rules -----------------------------------------------------------------
 
 include ../libs/xXx/utils/rules.mk
+
+download: $(EXECUTABLE)
+	arm-none-eabi-gdb -q -x download.gdb $<
