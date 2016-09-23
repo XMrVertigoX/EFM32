@@ -11,9 +11,7 @@ BlinkTask &blinkTask = BlinkTask::getInstance();
 
 int main(void) {
     CHIP_Init();
-
     sleepManager.init();
     blinkTask.attach(128, 1);
-
     vTaskStartScheduler();
 }

@@ -20,7 +20,7 @@ class BlinkTask : public Singleton<BlinkTask>, public ArduinoTask {
     BlinkTask() = default;
     ~BlinkTask() = default;
 
-    TickType_t xLastWakeTime = 0;
+    TickType_t _LastWakeTime = 0;
 };
 
 #endif /* BLINKTASK_HPP_ */
