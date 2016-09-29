@@ -25,7 +25,8 @@
 #define INCLUDE_vTaskDelayUntil 1
 #define INCLUDE_vTaskDelay 1
 
-#define portSUPPRESS_TICKS_AND_SLEEP vPortSuppressTicksAndSleep
+#define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime) \
+    vPortSuppressTicksAndSleep(xExpectedIdleTime)
 
 #define vPortSVCHandler SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
