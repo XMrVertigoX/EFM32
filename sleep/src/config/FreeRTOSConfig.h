@@ -3,12 +3,22 @@
 
 #include <assert.h>
 
+#define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime)                        \
+    vPortSuppressTicksAndSleep(xExpectedIdleTime)
+
 // clang-format off
+
+#define GET_INTERRUPT_PRIORITY(x)            (x << (8 - __NVIC_PRIO_BITS))
+
+#define INTERRUPT_PRIORITY_LOW               GET_INTERRUPT_PRIORITY(3)
+#define INTERRUPT_PRIORITY_MID               GET_INTERRUPT_PRIORITY(2)
+#define INTERRUPT_PRIORITY_HIGH              GET_INTERRUPT_PRIORITY(1)
+
 #define configASSERT(x)                      assert(x)
 #define configCPU_CLOCK_HZ                   (14000000)
-#define configKERNEL_INTERRUPT_PRIORITY      (3 << (8 - __NVIC_PRIO_BITS))
-#define configMAX_PRIORITIES                 (4)
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY (1 << (8 - __NVIC_PRIO_BITS))
+#define configKERNEL_INTERRUPT_PRIORITY      INTERRUPT_PRIORITY_LOW
+#define configMAX_PRIORITIES                 (3)
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY INTERRUPT_PRIORITY_HIGH
 #define configMINIMAL_STACK_SIZE             (64)
 #define configTICK_RATE_HZ                   (1000)
 #define configTOTAL_HEAP_SIZE                (1024)
@@ -29,9 +39,7 @@
 #define vPortSVCHandler(x)                   SVC_Handler(x)
 #define xPortPendSVHandler(x)                PendSV_Handler(x)
 #define xPortSysTickHandler(x)               SysTick_Handler(x)
-// clang-format on
 
-#define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime)                        \
-    vPortSuppressTicksAndSleep(xExpectedIdleTime)
+// clang-format on
 
 #endif /* FREERTOS_CONFIG_H */
