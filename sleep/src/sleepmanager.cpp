@@ -1,5 +1,4 @@
 #include <em_cmu.h>
-#include <em_gpio.h>
 #include <em_int.h>
 #include <em_rtc.h>
 
