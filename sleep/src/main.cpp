@@ -1,4 +1,5 @@
 #include <em_chip.h>
+#include <em_cmu.h>
 
 #include <FreeRTOS.h>
 #include <task.h>
@@ -17,10 +18,15 @@ int main(void) {
 
     CMU_ClockSelectSet(cmuClock_HF, cmuSelect_HFXO);
     CMU_ClockSelectSet(cmuClock_LFA, cmuSelect_LFXO);
+    CMU_ClockSelectSet(cmuClock_LFB, cmuSelect_LFXO);
+
+    CMU_OscillatorEnable(cmuOsc_HFRCO, false, false);
+    CMU_OscillatorEnable(cmuOsc_LFRCO, false, false);
 
     sleepManager.init();
     sleepManager.blockBegin(sleepEM3);
 
     blinkTask.attach(128, 1);
+
     vTaskStartScheduler();
 }
