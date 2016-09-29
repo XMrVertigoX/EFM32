@@ -1,13 +1,17 @@
 #include <em_cmu.h>
-#include <em_emu.h>
+// #include <em_emu.h>
 #include <em_gpio.h>
 #include <em_int.h>
 #include <em_rtc.h>
+
+#include <sleep.h>
 
 #include <FreeRTOS.h>
 #include <task.h>
 
 #include "sleepmanager.hpp"
+
+// ----- public ---------------------------------------------------------------
 
 void SleepManager::init() {
     CMU_OscillatorEnable(cmuOsc_LFRCO, true, true);
@@ -22,14 +26,16 @@ void SleepManager::init() {
     NVIC_EnableIRQ(RTC_IRQn);
 
     RTC_Init(&_rtcInit);
+
+    SLEEP_Init(NULL, NULL);
 }
 
-TickType_t SleepManager::rtc2rtos(uint32_t ticks) {
-    return ((ticks * configTICK_RATE_HZ) / _clockFreqency);
+void SleepManager::blockBegin(SLEEP_EnergyMode_t eMode) {
+    SLEEP_SleepBlockBegin(eMode);
 }
 
-uint32_t SleepManager::rtos2rtc(TickType_t ticks) {
-    return ((ticks * _clockFreqency) / configTICK_RATE_HZ);
+void SleepManager::blockEnd(SLEEP_EnergyMode_t eMode) {
+    SLEEP_SleepBlockEnd(eMode);
 }
 
 uint32_t SleepManager::sleep(TickType_t sleepTicks) {
@@ -41,7 +47,8 @@ uint32_t SleepManager::sleep(TickType_t sleepTicks) {
         RTC_IntEnable(RTC_IEN_COMP0);
     }
 
-    EMU_EnterEM2(true);
+    // EMU_EnterEM2(true);
+    SLEEP_Sleep();
 
     if (sleepTicks) {
         RTC_IntDisable(RTC_IEN_COMP0);
@@ -50,10 +57,26 @@ uint32_t SleepManager::sleep(TickType_t sleepTicks) {
     return (rtc2rtos(RTC_CounterGet() + 1));
 }
 
+// ----- private --------------------------------------------------------------
+
+TickType_t SleepManager::rtc2rtos(uint32_t ticks) {
+    return ((ticks * configTICK_RATE_HZ) / _clockFreqency);
+}
+
+uint32_t SleepManager::rtos2rtc(TickType_t ticks) {
+    return ((ticks * _clockFreqency) / configTICK_RATE_HZ);
+}
+
+/*
+ * Interrupt service routine
+ */
 void RTC_IRQHandler(void) {
     RTC_IntClear(RTC_IFC_COMP0);
 }
 
+/*
+ * FreeRTOS hook function
+ */
 void vPortSuppressTicksAndSleep(TickType_t expectedSleepTicks) {
     uint32_t actualSleepTicks = 0;
 

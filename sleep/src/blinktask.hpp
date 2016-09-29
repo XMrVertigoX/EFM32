@@ -12,11 +12,11 @@ using namespace xXx;
 class BlinkTask : public Singleton<BlinkTask>, public ArduinoTask {
     friend class Singleton<BlinkTask>;
 
-   public:
+  public:
     void setup();
     void loop();
 
-   private:
+  private:
     BlinkTask() = default;
     ~BlinkTask() = default;
 
