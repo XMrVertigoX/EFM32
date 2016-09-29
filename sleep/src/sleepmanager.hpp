@@ -26,7 +26,7 @@ class SleepManager : public Singleton<SleepManager> {
     uint32_t rtos2rtc(TickType_t ticks);
 
     uint32_t _clockFreqency = 0;
-    RTC_Init_TypeDef _rtcInit = {false, false, false};
+    RTC_Init_TypeDef _rtcInit = RTC_INIT_DEFAULT;
 };
 
 #endif /* SLEEPMANAGER_HPP_ */

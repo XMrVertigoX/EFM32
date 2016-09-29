@@ -62,6 +62,8 @@ uint32_t SleepManager::rtos2rtc(TickType_t ticks) {
     return ((ticks * _clockFreqency) / configTICK_RATE_HZ);
 }
 
+// ----- external -------------------------------------------------------------
+
 /*
  * Interrupt service routine
  */
