@@ -22,16 +22,15 @@ void SleepManager::init() {
     SLEEP_Init(NULL, NULL);
 }
 
-TickType_t SleepManager::sleep(TickType_t idleTicks) {
+TickType_t SleepManager::sleep(TickType_t ticks) {
     uint32_t timeRemaining;
 
-    RTCDRV_StartTimer(_id, rtcdrvTimerTypeOneshot, ticks2ms(idleTicks), NULL,
-                      NULL);
+    RTCDRV_StartTimer(_id, rtcdrvTimerTypeOneshot, ticks2ms(ticks), NULL, NULL);
     SLEEP_Sleep();
     RTCDRV_TimeRemaining(_id, &timeRemaining);
     RTCDRV_StopTimer(_id);
 
-    return ((TickType_t)(idleTicks - ms2ticks(timeRemaining)));
+    return ((TickType_t)(ticks - ms2ticks(timeRemaining)));
 }
 
 /*
