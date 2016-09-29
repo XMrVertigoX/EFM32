@@ -1,6 +1,7 @@
 # ----- Configuration ---------------------------------------------------------
 
-PROJECT_NAME = sleep
+TOOLCHAIN_PREFIX = arm-none-eabi-
+PROJECT_NAME     = sleep
 
 # ----- Source code------------------------------------------------------------
 
@@ -48,6 +49,7 @@ LDFLAGS += -Wl,--gc-sections
 
 # ----- Rules -----------------------------------------------------------------
 
-TOOLCHAIN_PREFIX = arm-none-eabi-
-
 include ../libs/xXx/utils/rules.mk
+
+download: $(EXECUTABLE)
+	arm-none-eabi-gdb -q -x download.gdb $<

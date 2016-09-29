@@ -3,6 +3,8 @@
 
 #include <em_rtc.h>
 
+#include <sleep.h>
+
 #include <xXx/templates/singleton.hpp>
 
 using namespace xXx;
@@ -10,11 +12,13 @@ using namespace xXx;
 class SleepManager : public Singleton<SleepManager> {
     friend class Singleton<SleepManager>;
 
-   public:
+  public:
     void init();
+    void blockBegin(SLEEP_EnergyMode_t eMode);
+    void blockEnd(SLEEP_EnergyMode_t eMode);
     uint32_t sleep(TickType_t rtosTicks = 0);
 
-   private:
+  private:
     SleepManager() = default;
     ~SleepManager() = default;
 
