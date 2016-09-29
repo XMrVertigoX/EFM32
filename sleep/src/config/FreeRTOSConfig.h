@@ -14,6 +14,8 @@
 #define INTERRUPT_PRIORITY_MID               GET_INTERRUPT_PRIORITY(2)
 #define INTERRUPT_PRIORITY_HIGH              GET_INTERRUPT_PRIORITY(1)
 
+// ----- FreeRTOS configuration -----------------------------------------------
+
 #define configASSERT(x)                      assert(x)
 #define configCPU_CLOCK_HZ                   (14000000)
 #define configKERNEL_INTERRUPT_PRIORITY      INTERRUPT_PRIORITY_LOW
