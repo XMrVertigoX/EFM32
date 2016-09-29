@@ -14,10 +14,10 @@
 // ----- public ---------------------------------------------------------------
 
 void SleepManager::init() {
-    CMU_OscillatorEnable(cmuOsc_LFRCO, true, true);
+    //    CMU_OscillatorEnable(cmuOsc_LFRCO, true, true);
 
-    CMU_ClockEnable(cmuClock_CORELE, true);
-    CMU_ClockSelectSet(cmuClock_LFA, cmuSelect_LFRCO);
+    //    CMU_ClockEnable(cmuClock_CORELE, true);
+    //    CMU_ClockSelectSet(cmuClock_LFA, cmuSelect_LFXO);
     CMU_ClockEnable(cmuClock_RTC, true);
 
     _clockFreqency = CMU_ClockFreqGet(cmuClock_LFA);

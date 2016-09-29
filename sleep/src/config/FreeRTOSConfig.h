@@ -17,7 +17,7 @@
 // ----- FreeRTOS configuration -----------------------------------------------
 
 #define configASSERT(x)                      assert(x)
-#define configCPU_CLOCK_HZ                   (14000000)
+#define configCPU_CLOCK_HZ                   (24000000)
 #define configKERNEL_INTERRUPT_PRIORITY      INTERRUPT_PRIORITY_LOW
 #define configMAX_PRIORITIES                 (3)
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY INTERRUPT_PRIORITY_HIGH
