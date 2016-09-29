@@ -1,6 +1,5 @@
 ---
 Language: Cpp
-BasedOnStyle: Google
 
 AllowShortBlocksOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
