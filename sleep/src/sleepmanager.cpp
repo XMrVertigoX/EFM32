@@ -1,7 +1,6 @@
-#include <em_cmu.h>
 #include <em_int.h>
-#include <em_rtc.h>
 
+#include <rtcdriver.h>
 #include <sleep.h>
 
 #include <FreeRTOS.h>
@@ -9,74 +8,36 @@
 
 #include "sleepmanager.hpp"
 
-// ----- public ---------------------------------------------------------------
+static inline uint32_t ticks2ms(TickType_t ticks) {
+    return (ticks / portTICK_PERIOD_MS);
+}
+
+static inline TickType_t ms2ticks(uint32_t milliseconds) {
+    return (milliseconds * portTICK_PERIOD_MS);
+}
 
 void SleepManager::init() {
-    _clockFreqency = CMU_ClockFreqGet(cmuClock_RTC);
-
-    CMU_ClockEnable(cmuClock_HFLE, true);
-    CMU_ClockEnable(cmuClock_RTC, true);
-
-    NVIC_ClearPendingIRQ(RTC_IRQn);
-    NVIC_EnableIRQ(RTC_IRQn);
-
-    RTC_Init(&_rtcInit);
-
+    RTCDRV_Init();
+    RTCDRV_AllocateTimer(&_id);
     SLEEP_Init(NULL, NULL);
 }
 
-void SleepManager::blockBegin(SLEEP_EnergyMode_t eMode) {
-    SLEEP_SleepBlockBegin(eMode);
-}
+TickType_t SleepManager::sleep(TickType_t idleTicks) {
+    uint32_t timeRemaining;
 
-void SleepManager::blockEnd(SLEEP_EnergyMode_t eMode) {
-    SLEEP_SleepBlockEnd(eMode);
-}
-
-uint32_t SleepManager::sleep(TickType_t sleepTicks) {
-    RTC_CompareSet(0, rtos2rtc(sleepTicks) - 1);
-
-    RTC_CounterReset();
-
-    if (sleepTicks) {
-        RTC_IntEnable(RTC_IEN_COMP0);
-    }
-
+    RTCDRV_StartTimer(_id, rtcdrvTimerTypeOneshot, ticks2ms(idleTicks), NULL,
+                      NULL);
     SLEEP_Sleep();
+    RTCDRV_TimeRemaining(_id, &timeRemaining);
+    RTCDRV_StopTimer(_id);
 
-    if (sleepTicks) {
-        RTC_IntDisable(RTC_IEN_COMP0);
-    }
-
-    return (rtc2rtos(RTC_CounterGet() + 1));
-}
-
-// ----- private --------------------------------------------------------------
-
-TickType_t SleepManager::rtc2rtos(uint32_t ticks) {
-    return ((ticks * configTICK_RATE_HZ) / _clockFreqency);
-}
-
-uint32_t SleepManager::rtos2rtc(TickType_t ticks) {
-    return ((ticks * _clockFreqency) / configTICK_RATE_HZ);
-}
-
-// ----- external -------------------------------------------------------------
-
-/*
- * Interrupt service routine
- */
-void RTC_IRQHandler(void) {
-    RTC_IntClear(RTC_IFC_COMP0);
+    return ((TickType_t)(idleTicks - ms2ticks(timeRemaining)));
 }
 
 /*
  * FreeRTOS hook function
  */
-void vPortSuppressTicksAndSleep(TickType_t expectedSleepTicks) {
-    uint32_t actualSleepTicks = 0;
-
-    SleepManager &sleepManager = SleepManager::getInstance();
+void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime) {
     eSleepModeStatus eSleepStatus = eTaskConfirmSleepModeStatus();
 
     if (eSleepStatus == eAbortSleep) {
@@ -85,10 +46,13 @@ void vPortSuppressTicksAndSleep(TickType_t expectedSleepTicks) {
 
     INT_Disable();
 
+    uint32_t actualSleepTicks;
+    SleepManager &sleepManager = SleepManager::getInstance();
+
     if (eSleepStatus == eStandardSleep) {
-        actualSleepTicks = sleepManager.sleep(expectedSleepTicks);
+        actualSleepTicks = sleepManager.sleep(xExpectedIdleTime);
     } else {
-        actualSleepTicks = sleepManager.sleep();
+        actualSleepTicks = sleepManager.sleep(portMAX_DELAY);
     }
 
     vTaskStepTick(actualSleepTicks);

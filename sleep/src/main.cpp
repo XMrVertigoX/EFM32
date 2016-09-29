@@ -24,7 +24,6 @@ int main(void) {
     CMU_OscillatorEnable(cmuOsc_LFRCO, false, false);
 
     sleepManager.init();
-    sleepManager.blockBegin(sleepEM3);
 
     blinkTask.attach(128, 1);
 
