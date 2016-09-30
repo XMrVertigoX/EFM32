@@ -9,14 +9,12 @@
 HardwareManager &hardwareManager = HardwareManager::getInstance();
 SleepManager &sleepManager = SleepManager::getInstance();
 
-BlinkTask blinkTask;
+BlinkTask blinkTask(128, 1);
 
 int main(void) {
     hardwareManager.init();
     hardwareManager.switchClocks();
     sleepManager.init();
-
-    blinkTask.attach(128, 1);
 
     vTaskStartScheduler();
 }

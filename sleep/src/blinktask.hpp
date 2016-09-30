@@ -13,8 +13,8 @@ using namespace xXx;
 class BlinkTask : public ArduinoTask {
 
   public:
-    BlinkTask();
-    ~BlinkTask();
+    BlinkTask(uint16_t stack, UBaseType_t priority);
+    virtual ~BlinkTask();
 
     void setup();
     void loop();
