@@ -21,7 +21,7 @@ class SleepManager : public Singleton<SleepManager> {
     SleepManager() = default;
     ~SleepManager() = default;
 
-    RTCDRV_TimerID_t _id;
+    RTCDRV_TimerID_t _id = 0;
 };
 
 #endif /* SLEEPMANAGER_HPP_ */
