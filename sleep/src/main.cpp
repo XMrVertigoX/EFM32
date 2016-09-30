@@ -14,7 +14,6 @@ BlinkTask blinkTask;
 int main(void) {
     hardwareManager.init();
     hardwareManager.switchClocks();
-
     sleepManager.init();
 
     blinkTask.attach(128, 1);
