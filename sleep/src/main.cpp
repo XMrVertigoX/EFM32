@@ -1,5 +1,4 @@
 #include <FreeRTOS.h>
-#include <semphr.h>
 #include <task.h>
 
 #include "blinktask.hpp"
