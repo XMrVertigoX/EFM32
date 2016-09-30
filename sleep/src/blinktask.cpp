@@ -17,7 +17,12 @@ void BlinkTask::setup() {
 }
 
 void BlinkTask::loop() {
-    vTaskDelayUntil(&_LastWakeTime, 500 / portTICK_PERIOD_MS);
+    vTaskDelayUntil(&_LastWakeTime, 900 / portTICK_PERIOD_MS);
+
+    GPIO_PinOutToggle(gpioPortC, 10);
+    GPIO_PinOutToggle(gpioPortC, 11);
+
+    vTaskDelayUntil(&_LastWakeTime, 100 / portTICK_PERIOD_MS);
 
     GPIO_PinOutToggle(gpioPortC, 10);
     GPIO_PinOutToggle(gpioPortC, 11);
