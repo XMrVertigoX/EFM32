@@ -1,6 +1,3 @@
-#include <em_chip.h>
-#include <em_cmu.h>
-
 #include <FreeRTOS.h>
 #include <task.h>
 
