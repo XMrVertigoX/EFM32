@@ -13,14 +13,13 @@ using namespace xXx;
 class BlinkTask : public ArduinoTask {
 
   public:
-    BlinkTask(SemaphoreHandle_t &semaphore);
+    BlinkTask();
     ~BlinkTask();
 
     void setup();
     void loop();
 
   private:
-    SemaphoreHandle_t &_semaphore;
     TickType_t _LastWakeTime;
 };
 

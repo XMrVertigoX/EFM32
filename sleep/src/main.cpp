@@ -9,9 +9,7 @@
 HardwareManager &hardwareManager = HardwareManager::getInstance();
 SleepManager &sleepManager = SleepManager::getInstance();
 
-SemaphoreHandle_t semaphore = NULL;
-
-BlinkTask blinkTask(semaphore);
+BlinkTask blinkTask;
 
 int main(void) {
     hardwareManager.init();
