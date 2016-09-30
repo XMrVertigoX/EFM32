@@ -5,8 +5,8 @@
 #include <semphr.h>
 #include <task.h>
 
+#include <xXx/os/arduinotask.hpp>
 #include <xXx/templates/singleton.hpp>
-#include <xXx/utils/arduinotask.hpp>
 
 using namespace xXx;
 
