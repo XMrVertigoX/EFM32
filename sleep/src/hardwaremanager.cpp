@@ -19,13 +19,13 @@ static inline void disableRCOscillators() {
     CMU_OscillatorEnable(cmuOsc_LFRCO, false, false);
 }
 
+void HardwareManager::init() {
+    // TODO: Necessary?
+    CHIP_Init();
+}
+
 void HardwareManager::switchClocks() {
     enableCrystalOscillators();
     switchClockBranches();
     disableRCOscillators();
-}
-
-void HardwareManager::init() {
-    // TODO: Necessary?
-    CHIP_Init();
 }
