@@ -1,4 +1,5 @@
 #include <FreeRTOS.h>
+#include <semphr.h>
 #include <task.h>
 
 #include "blinktask.hpp"
@@ -7,7 +8,10 @@
 
 HardwareManager &hardwareManager = HardwareManager::getInstance();
 SleepManager &sleepManager = SleepManager::getInstance();
-BlinkTask &blinkTask = BlinkTask::getInstance();
+
+SemaphoreHandle_t semaphore = NULL;
+
+BlinkTask blinkTask(semaphore);
 
 int main(void) {
     hardwareManager.init();

@@ -2,6 +2,7 @@
 #define BLINKTASK_HPP_
 
 #include <FreeRTOS.h>
+#include <semphr.h>
 #include <task.h>
 
 #include <xXx/templates/singleton.hpp>
@@ -9,18 +10,18 @@
 
 using namespace xXx;
 
-class BlinkTask : public Singleton<BlinkTask>, public ArduinoTask {
-    friend class Singleton<BlinkTask>;
+class BlinkTask : public ArduinoTask {
 
   public:
+    BlinkTask(SemaphoreHandle_t &semaphore);
+    ~BlinkTask();
+
     void setup();
     void loop();
 
   private:
-    BlinkTask() = default;
-    ~BlinkTask() = default;
-
-    TickType_t _LastWakeTime = 0;
+    SemaphoreHandle_t &_semaphore;
+    TickType_t _LastWakeTime;
 };
 
 #endif /* BLINKTASK_HPP_ */
