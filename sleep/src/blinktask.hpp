@@ -6,12 +6,10 @@
 #include <task.h>
 
 #include <xXx/os/arduinotask.hpp>
-#include <xXx/templates/singleton.hpp>
 
 using namespace xXx;
 
 class BlinkTask : public ArduinoTask {
-
   public:
     BlinkTask(uint16_t stack, UBaseType_t priority);
     virtual ~BlinkTask();

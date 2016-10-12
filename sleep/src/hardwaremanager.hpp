@@ -13,7 +13,7 @@ class HardwareManager : public Singleton<HardwareManager> {
     void switchClocks();
 
   private:
-    HardwareManager() = default;
+    HardwareManager()  = default;
     ~HardwareManager() = default;
 };
 

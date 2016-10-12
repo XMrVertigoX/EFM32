@@ -1,6 +1,8 @@
 #ifndef SLEEPMANAGER_HPP_
 #define SLEEPMANAGER_HPP_
 
+#include <cstdint>
+
 #include <rtcdriver.h>
 #include <sleep.h>
 
@@ -18,7 +20,7 @@ class SleepManager : public Singleton<SleepManager> {
     uint32_t sleep(TickType_t idleTicks);
 
   private:
-    SleepManager() = default;
+    SleepManager()  = default;
     ~SleepManager() = default;
 
     RTCDRV_TimerID_t _id = 0;

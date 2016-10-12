@@ -3,8 +3,7 @@
 
 #include <assert.h>
 
-#define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime)                        \
-    vPortSuppressTicksAndSleep(xExpectedIdleTime)
+// ----- FreeRTOS configuration ------------------------------------------------
 
 // clang-format off
 
@@ -13,8 +12,6 @@
 #define INTERRUPT_PRIORITY_LOW               GET_INTERRUPT_PRIORITY(3)
 #define INTERRUPT_PRIORITY_MID               GET_INTERRUPT_PRIORITY(2)
 #define INTERRUPT_PRIORITY_HIGH              GET_INTERRUPT_PRIORITY(1)
-
-// ----- FreeRTOS configuration -----------------------------------------------
 
 #define configASSERT(x)                      assert(x)
 #define configCPU_CLOCK_HZ                   (24000000)
@@ -43,5 +40,10 @@
 #define xPortSysTickHandler(x)               SysTick_Handler(x)
 
 // clang-format on
+
+#define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime)                        \
+    vPortSuppressTicksAndSleep(xExpectedIdleTime)
+
+// ----- /FreeRTOS configuration -----------------------------------------------
 
 #endif /* FREERTOS_CONFIG_H */

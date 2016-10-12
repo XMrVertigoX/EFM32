@@ -6,7 +6,7 @@
 #include "sleepmanager.hpp"
 
 HardwareManager &hardwareManager = HardwareManager::getInstance();
-SleepManager &sleepManager = SleepManager::getInstance();
+SleepManager &sleepManager       = SleepManager::getInstance();
 
 BlinkTask blinkTask(128, 1);
 
