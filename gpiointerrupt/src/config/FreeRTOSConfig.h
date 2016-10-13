@@ -25,7 +25,7 @@
 
 // Interrupt nesting behaviour configuration.
 #define configKERNEL_INTERRUPT_PRIORITY 0xFF
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY 0xA0  // equivalent priority 5.
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY 0xA0 // equivalent priority 5.
 
 // Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
 // standard names.
