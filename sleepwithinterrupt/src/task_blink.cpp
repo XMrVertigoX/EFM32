@@ -18,18 +18,12 @@ void Task_Blink::setup() {
     CMU_ClockEnable(cmuClock_HFLE, true);
     CMU_ClockEnable(cmuClock_GPIO, true);
 
-    GPIO_PinModeSet(gpioPortC, 10, gpioModePushPullDrive, 0);
-    GPIO_PinModeSet(gpioPortC, 11, gpioModePushPullDrive, 0);
+    GPIO_PinModeSet(gpioPortC, 10, gpioModePushPull, 0);
 }
 
 void Task_Blink::loop() {
     vTaskDelayUntil(&_LastWakeTime, 900 / portTICK_PERIOD_MS);
-
     GPIO_PinOutToggle(gpioPortC, 10);
-    GPIO_PinOutToggle(gpioPortC, 11);
-
     vTaskDelayUntil(&_LastWakeTime, 100 / portTICK_PERIOD_MS);
-
     GPIO_PinOutToggle(gpioPortC, 10);
-    GPIO_PinOutToggle(gpioPortC, 11);
 }

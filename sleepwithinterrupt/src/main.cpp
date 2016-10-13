@@ -21,12 +21,9 @@ Task_Toggle task_toggle(semaphore);
 
 int main(void) {
     hardwareManager.init();
-    hardwareManager.switchClocks();
     sleepManager.init();
 
     semaphore = xSemaphoreCreateBinary();
-
-    GPIOINT_Init();
 
     vTaskStartScheduler();
 }

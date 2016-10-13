@@ -7,6 +7,8 @@
 
 #include <xXx/os/arduinotask.hpp>
 
+#include "hardwaremanager.hpp"
+
 using namespace xXx;
 
 class Task_Toggle : public ArduinoTask {
@@ -18,7 +20,8 @@ class Task_Toggle : public ArduinoTask {
     void loop();
 
   private:
-    SemaphoreHandle_t _semaphore;
+    HardwareManager &_hardwareManager = HardwareManager::getInstance();
+    SemaphoreHandle_t &_semaphore;
 };
 
 #endif /* TASK_TOGGLE_HPP_ */

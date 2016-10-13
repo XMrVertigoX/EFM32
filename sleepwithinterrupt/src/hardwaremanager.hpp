@@ -10,7 +10,10 @@ class HardwareManager : public Singleton<HardwareManager> {
 
   public:
     void init();
-    void switchClocks();
+    void enableGpioAsInput(GPIO_Port_TypeDef port, unsigned int pin);
+    void enableGpioAsOutput(GPIO_Port_TypeDef port, unsigned int pin);
+    void enableGpioInterrupt(GPIO_Port_TypeDef port, unsigned int pin);
+    void toggleGpio(GPIO_Port_TypeDef port, unsigned int pin);
 
   private:
     HardwareManager()  = default;
