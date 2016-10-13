@@ -40,7 +40,7 @@ void HardwareManager::init() {
     switchClockBranches();
     disableRCOscillators();
 
-    // TODO: Only enable on demand
+    // TODO: Only enable on demand.
     enableGpioClock();
 
     GPIOINT_Init();
