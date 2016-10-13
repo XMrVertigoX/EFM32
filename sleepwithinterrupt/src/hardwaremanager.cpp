@@ -46,11 +46,13 @@ void HardwareManager::init() {
     GPIOINT_Init();
 }
 
-void enableGpioAsInput(GPIO_Port_TypeDef port, unsigned int pin) {
+void HardwareManager::enableGpioAsInput(GPIO_Port_TypeDef port,
+                                        unsigned int pin) {
     GPIO_PinModeSet(port, pin, gpioModeInput, 0);
 }
 
-void enableGpioAsOutput(GPIO_Port_TypeDef port, unsigned int pin) {
+void HardwareManager::enableGpioAsOutput(GPIO_Port_TypeDef port,
+                                         unsigned int pin) {
     GPIO_PinModeSet(port, pin, gpioModePushPull, 0);
 }
 
