@@ -1,5 +1,5 @@
-#ifndef BLINKTASK_HPP_
-#define BLINKTASK_HPP_
+#ifndef TASK_BLINK_HPP_
+#define TASK_BLINK_HPP_
 
 #include <FreeRTOS.h>
 #include <semphr.h>
@@ -9,10 +9,10 @@
 
 using namespace xXx;
 
-class BlinkTask : public ArduinoTask {
+class Task_Blink : public ArduinoTask {
   public:
-    BlinkTask(uint16_t stack, UBaseType_t priority);
-    virtual ~BlinkTask();
+    Task_Blink();
+    virtual ~Task_Blink();
 
     void setup();
     void loop();
@@ -21,4 +21,4 @@ class BlinkTask : public ArduinoTask {
     TickType_t _LastWakeTime;
 };
 
-#endif /* BLINKTASK_HPP_ */
+#endif /* TASK_BLINK_HPP_ */

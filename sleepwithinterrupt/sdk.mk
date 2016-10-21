@@ -23,12 +23,9 @@ SOURCE_FILES += $(DEVICE)/Source/system_efm32zg.c
 
 # ----- emdrv -----------------------------------------------------------------
 
-INCLUDE_DIRS += $(EMDRV)/common/inc
-
-INCLUDE_DIRS += $(EMDRV)/rtcdrv/inc
+INCLUDE_DIRS += $(wildcard $(EMDRV)/*/inc)
+SOURCE_FILES += $(EMDRV)/gpiointerrupt/src/gpiointerrupt.c
 SOURCE_FILES += $(EMDRV)/rtcdrv/src/rtcdriver.c
-
-INCLUDE_DIRS += $(EMDRV)/sleep/inc
 SOURCE_FILES += $(EMDRV)/sleep/src/sleep.c
 
 # ----- emlib -----------------------------------------------------------------

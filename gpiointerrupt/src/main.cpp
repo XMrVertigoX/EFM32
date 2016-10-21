@@ -37,8 +37,8 @@ void gpioCallback(uint8_t pin) {
     }
 }
 
-void taskLed0(void* pParameters) {
-    Task0_Parameter_TypeDef* pData = (Task0_Parameter_TypeDef*)pParameters;
+void taskLed0(void *pParameters) {
+    Task0_Parameter_TypeDef *pData = (Task0_Parameter_TypeDef *)pParameters;
     for (;;) {
         if (xSemaphoreTake(pData->semaphore, 0) == pdTRUE) {
             GPIO_PinOutToggle(pData->port, pData->pin);
@@ -46,8 +46,8 @@ void taskLed0(void* pParameters) {
     }
 }
 
-void taskLed1(void* pParameters) {
-    Task1_Parameter_TypeDef* pData = (Task1_Parameter_TypeDef*)pParameters;
+void taskLed1(void *pParameters) {
+    Task1_Parameter_TypeDef *pData = (Task1_Parameter_TypeDef *)pParameters;
     for (;;) {
         if (xSemaphoreTake(pData->semaphore, 0) == pdTRUE) {
             GPIO_PinOutToggle(pData->port, pData->pin);
@@ -72,12 +72,12 @@ int main(void) {
     GPIOINT_CallbackRegister(8, gpioCallback);
     GPIOINT_CallbackRegister(9, gpioCallback);
 
-    parametersToTask0.port = gpioPortC;
-    parametersToTask0.pin = 10;
+    parametersToTask0.port      = gpioPortC;
+    parametersToTask0.pin       = 10;
     parametersToTask0.semaphore = xSemaphoreCreateBinary();
 
-    parametersToTask1.port = gpioPortC;
-    parametersToTask1.pin = 11;
+    parametersToTask1.port      = gpioPortC;
+    parametersToTask1.pin       = 11;
     parametersToTask1.semaphore = xSemaphoreCreateBinary();
 
     xTaskCreate(taskLed0, NULL, configMINIMAL_STACK_SIZE, &parametersToTask0,
