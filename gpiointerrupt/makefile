@@ -26,14 +26,16 @@ GCCFLAGS += -march=armv6-m
 GCCFLAGS += -mtune=cortex-m0plus
 GCCFLAGS += -mthumb
 
-# CPPFLAGS +=
+COMMON_CFLAGS += -g
+COMMON_CFLAGS += -Og
 
-CFLAGS   += -Og -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c11
-CXXFLAGS += -Og -g -fdata-sections -ffunction-sections -fno-exceptions -fno-builtin -fno-common -fomit-frame-pointer -std=c++17
+CFLAGS += -std=c11
 
-LDFLAGS += --specs=nano.specs
-LDFLAGS += --specs=nosys.specs
-LDFLAGS += -Wl,--gc-sections
+CXXFLAGS += -std=c++17
+
+CPPFLAGS +=
+
+LDFLAGS += 
 
 # ----- Rules -----------------------------------------------------------------
 
