@@ -15,11 +15,11 @@ using namespace xXx;
 class SleepManager : public Singleton<SleepManager> {
     friend class Singleton<SleepManager>;
 
-  public:
+   public:
     void init();
     uint32_t sleep(TickType_t idleTicks);
 
-  private:
+   private:
     SleepManager()  = default;
     ~SleepManager() = default;
 

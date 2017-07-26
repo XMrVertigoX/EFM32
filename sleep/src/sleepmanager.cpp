@@ -1,4 +1,4 @@
-#include <em_int.h>
+#include <em_core.h>
 
 #include <rtcdriver.h>
 #include <sleep.h>
@@ -36,25 +36,25 @@ TickType_t SleepManager::sleep(TickType_t ticks) {
 /*
  * FreeRTOS hook function
  */
-void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime) {
-    eSleepModeStatus eSleepStatus = eTaskConfirmSleepModeStatus();
+extern "C" void vPortSuppressTicksAndSleep(TickType_t expectedIdleTime) {
+    eSleepModeStatus sleepStatus = eTaskConfirmSleepModeStatus();
 
-    if (eSleepStatus == eAbortSleep) {
+    if (sleepStatus == eAbortSleep) {
         return;
     }
 
-    INT_Disable();
+    CORE_ATOMIC_IRQ_DISABLE();
 
     uint32_t actualSleepTicks;
     SleepManager &sleepManager = SleepManager::getInstance();
 
-    if (eSleepStatus == eStandardSleep) {
-        actualSleepTicks = sleepManager.sleep(xExpectedIdleTime);
+    if (sleepStatus == eStandardSleep) {
+        actualSleepTicks = sleepManager.sleep(expectedIdleTime);
     } else {
         actualSleepTicks = sleepManager.sleep(portMAX_DELAY);
     }
 
     vTaskStepTick(actualSleepTicks);
 
-    INT_Enable();
+    CORE_ATOMIC_IRQ_ENABLE();
 }

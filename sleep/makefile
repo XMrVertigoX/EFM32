@@ -7,7 +7,7 @@ PROJECT_NAME     = sleep
 
 include sdk.mk
 
-SYMBOLS += NDEBUG
+# SYMBOLS += NDEBUG
 
 INCLUDE_DIRS += ../libs
 SOURCE_FILES += $(wildcard ../libs/xXx/os/*.cpp)
@@ -20,7 +20,7 @@ SOURCE_FILES += $(wildcard src/*.cpp)
 
 # ----- Libraries -------------------------------------------------------------
 
-LIBRARIES += arm_cortexM0l_math
+# LIBRARIES += arm_cortexM0l_math
 
 # ----- Flags -----------------------------------------------------------------
 
@@ -37,7 +37,7 @@ CXXFLAGS += -std=gnu++14
 
 CPPFLAGS +=
 
-LDFLAGS += 
+LDFLAGS +=
 
 # ----- Rules -----------------------------------------------------------------
 

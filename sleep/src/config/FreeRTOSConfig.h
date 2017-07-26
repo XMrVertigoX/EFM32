@@ -3,8 +3,6 @@
 
 #include <assert.h>
 
-// ----- FreeRTOS configuration ------------------------------------------------
-
 // clang-format off
 
 #define GET_INTERRUPT_PRIORITY(x)            (x << (8 - __NVIC_PRIO_BITS))
@@ -40,10 +38,5 @@
 #define xPortSysTickHandler(x)               SysTick_Handler(x)
 
 // clang-format on
-
-#define portSUPPRESS_TICKS_AND_SLEEP(xExpectedIdleTime)                        \
-    vPortSuppressTicksAndSleep(xExpectedIdleTime)
-
-// ----- /FreeRTOS configuration -----------------------------------------------
 
 #endif /* FREERTOS_CONFIG_H */

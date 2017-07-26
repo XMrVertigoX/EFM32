@@ -5,19 +5,19 @@
 #include <semphr.h>
 #include <task.h>
 
-#include <xXx/os/arduinotask.hpp>
+#include <xXx/os/simpletask.hpp>
 
 using namespace xXx;
 
-class BlinkTask : public ArduinoTask {
-  public:
-    BlinkTask(uint16_t stack, UBaseType_t priority);
+class BlinkTask : public SimpleTask {
+   public:
+    BlinkTask();
     virtual ~BlinkTask();
 
     void setup();
     void loop();
 
-  private:
+   private:
     TickType_t _LastWakeTime;
 };
 

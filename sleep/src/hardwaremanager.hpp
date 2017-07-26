@@ -8,11 +8,11 @@ using namespace xXx;
 class HardwareManager : public Singleton<HardwareManager> {
     friend class Singleton<HardwareManager>;
 
-  public:
+   public:
     void init();
     void switchClocks();
 
-  private:
+   private:
     HardwareManager()  = default;
     ~HardwareManager() = default;
 };

@@ -9,8 +9,7 @@
 
 using namespace xXx;
 
-BlinkTask::BlinkTask(uint16_t stack, UBaseType_t priority)
-    : ArduinoTask(stack, priority), _LastWakeTime(0) {}
+BlinkTask::BlinkTask() : _LastWakeTime(0) {}
 
 BlinkTask::~BlinkTask() {}
 

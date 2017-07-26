@@ -8,7 +8,7 @@
 HardwareManager &hardwareManager = HardwareManager::getInstance();
 SleepManager &sleepManager       = SleepManager::getInstance();
 
-BlinkTask blinkTask(128, 1);
+BlinkTask blinkTask;
 
 int main(void) {
     hardwareManager.init();

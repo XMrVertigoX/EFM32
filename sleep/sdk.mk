@@ -1,10 +1,10 @@
 GECKO_SDK = ../libs/Gecko_SDK
 
-CMSIS     = $(GECKO_SDK)/cmsis
-DEVICE    = $(GECKO_SDK)/Device/SiliconLabs/EFM32ZG
-EMDRV     = $(GECKO_SDK)/emdrv
-EMLIB     = $(GECKO_SDK)/emlib
-FREERTOS  = $(GECKO_SDK)/reptile/FreeRTOS/Source
+CMSIS     = $(GECKO_SDK)/platform/CMSIS
+DEVICE    = $(GECKO_SDK)/platform/Device/SiliconLabs/EFM32ZG
+EMDRV     = $(GECKO_SDK)/platform//emdrv
+EMLIB     = $(GECKO_SDK)/platform//emlib
+FREERTOS  = $(GECKO_SDK)/util/third_party/freertos/Source
 
 # ----- Symbols ---------------------------------------------------------------
 
